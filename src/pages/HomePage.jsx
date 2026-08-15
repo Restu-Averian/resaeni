@@ -18,10 +18,6 @@ function HomePage() {
     queryFn: getHomeData,
   });
 
-  console.log("j", {
-    homeData,
-    error,
-  });
   return (
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "0" }}>
       <Container maxW="1600px" px={{ base: "4", md: "5", xl: "10" }} py="3">
