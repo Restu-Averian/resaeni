@@ -7,7 +7,7 @@ export const NAV_ITEMS = [
 export const FINDER_PROMO = {
   title: "Can’t remember the anime?",
   description:
-    "Upload a screenshot from an anime episode and let Resnime help identify it.",
+    "Upload a screenshot from an anime episode and let Resaeni help identify it.",
   cta: "Find the anime",
 };
 

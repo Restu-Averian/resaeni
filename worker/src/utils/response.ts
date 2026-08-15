@@ -1,11 +1,11 @@
-export function successResponse(data: unknown) {
+export const successResponse = <T>(data: T) => {
   return {
     success: true,
     data,
   };
-}
+};
 
-export function errorResponse(code: string, message: string) {
+export const errorResponse = (code: string, message: string) => {
   return {
     success: false,
     error: {
@@ -13,4 +13,4 @@ export function errorResponse(code: string, message: string) {
       message,
     },
   };
-}
+};

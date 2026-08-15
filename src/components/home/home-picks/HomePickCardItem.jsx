@@ -66,8 +66,8 @@ function HomePickCardItem({ pick, variant = "desktop" }) {
         >
           <Star
             size={isMobile ? 12 : 16}
-            fill="var(--resnime-colors-rating-default)"
-            color="var(--resnime-colors-rating-default)"
+            fill="var(--resaeni-colors-rating-default)"
+            color="var(--resaeni-colors-rating-default)"
             strokeWidth={1.3}
           />
 

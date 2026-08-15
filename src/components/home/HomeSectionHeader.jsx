@@ -7,7 +7,7 @@ function HomeSectionHeader({ icon: Icon, title }) {
         <Icon
           size={22}
           strokeWidth={1.6}
-          color="var(--resnime-colors-accent-primary)"
+          color="var(--resaeni-colors-accent-primary)"
         />
       ) : null}
 
