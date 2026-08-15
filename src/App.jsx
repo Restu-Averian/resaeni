@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router";
-
 import Layout from "./components/global/layout.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
