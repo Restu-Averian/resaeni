@@ -9,10 +9,14 @@ function AnimeDetailsTabs({
   return (
     <Tabs.Root value={activeTab} onValueChange={(e) => onTabChange(e.value)}>
       <Tabs.List
+        position="sticky"
+        top={{ base: "90px", md: "76px" }}
+        zIndex="10"
         bg="rgba(7, 29, 47, 0.72)"
         border="1px solid"
         borderColor="border.default"
         borderRadius="control"
+        backdropFilter="blur(14px)"
         overflow="hidden"
         display="grid"
         gridTemplateColumns="repeat(2, minmax(0, 1fr))"
