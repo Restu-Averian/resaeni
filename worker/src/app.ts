@@ -4,6 +4,7 @@ import { Bindings } from "./types/bindings";
 import { errorResponse } from "./utils/response";
 import health from "./routes/health";
 import homeRouter from "./routes/home";
+import animeListRouter from "./routes/anime-list";
 import animeDetailsRouter from "./routes/anime-details";
 
 const app = new Hono<{ Bindings: Bindings }>();
@@ -29,6 +30,7 @@ app.use(
 app.route("/health", health);
 
 app.route("/api/home", homeRouter);
+app.route("/api/anime", animeListRouter);
 app.route("/api/anime/:mal_id", animeDetailsRouter);
 
 app.notFound((c) => {

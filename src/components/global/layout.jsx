@@ -12,7 +12,7 @@ import { Link as RouterLink, Outlet, useLocation } from "react-router";
 
 const navItems = [
   { label: "Home", href: "/", icon: Home },
-  { label: "Anime List", href: "#", icon: List },
+  { label: "Anime List", href: "/anime", icon: List },
   { label: "Anime Finder", href: "#", icon: Search },
 ];
 
