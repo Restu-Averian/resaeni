@@ -1,5 +1,13 @@
 import { useState, useCallback } from "react";
-import { Box, Container, Flex, Stack, Text, Center } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  Flex,
+  Stack,
+  Text,
+  Center,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import AnimeListHeader from "../components/anime-list/AnimeListHeader";
 import AnimeListSearchInput from "../components/anime-list/AnimeListSearchInput";
@@ -20,6 +28,7 @@ function AnimeListPage() {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [page, setPage] = useState(1);
+  const isMobile = useBreakpointValue({ base: true, md: false });
 
   const handleSearchChange = useCallback((value) => {
     setSearch(value);
@@ -70,9 +79,11 @@ function AnimeListPage() {
         py={{ base: "7", md: "10" }}
       >
         <Stack gap={{ base: "7", md: "8" }}>
+          {isMobile && <AnimeListHeader />}
+
           <Stack
             position="sticky"
-            top="75"
+            top={{ base: "88px", md: "72px" }}
             zIndex="10"
             bg="bg.canvas"
             gap={{ base: "7", md: "8" }}
@@ -84,7 +95,7 @@ function AnimeListPage() {
               direction={{ base: "column", md: "row" }}
               gap="6"
             >
-              <AnimeListHeader />
+              {!isMobile && <AnimeListHeader />}
 
               <AnimeListSearchInput onSearchChange={handleSearchChange} />
             </Flex>

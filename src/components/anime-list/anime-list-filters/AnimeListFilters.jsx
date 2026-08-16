@@ -1,4 +1,4 @@
-import { SimpleGrid, Stack } from "@chakra-ui/react";
+import { Grid, Stack, Box } from "@chakra-ui/react";
 import AnimeListFiltersItems from "./AnimeListFiltersItems";
 import { Select } from "../../ui/select";
 import { FILTER_OPTIONS, FILTERS_CONFIG } from "../../../constants/anime-list";
@@ -11,19 +11,30 @@ function AnimeListFilters({
 }) {
   return (
     <Stack gap="4">
-      <SimpleGrid columns={{ base: 1, sm: 2, lg: 5 }} gap="3">
+      <Grid
+        templateColumns={{
+          base: "max-content",
+          sm: "repeat(2, 1fr)",
+          lg: "repeat(5, 1fr)",
+        }}
+        autoFlow={{ base: "column", sm: "row" }}
+        gap="3"
+        overflowX={{ base: "auto", sm: "visible" }}
+        css={{ scrollbarWidth: "none" }}
+      >
         {FILTERS_CONFIG?.map((filter) => (
-          <Select
-            key={filter.name}
-            prefixIcon={filter.icon}
-            prefixLabel={filter.label}
-            name={filter.name}
-            options={FILTER_OPTIONS[filter.name]}
-            value={filters[filter.name]}
-            onChange={onFilterChange}
-          />
+          <Box key={filter.name} w={{ base: "180px", sm: "auto" }}>
+            <Select
+              prefixIcon={filter.icon}
+              prefixLabel={filter.label}
+              name={filter.name}
+              options={FILTER_OPTIONS[filter.name]}
+              value={filters[filter.name]}
+              onChange={onFilterChange}
+            />
+          </Box>
         ))}
-      </SimpleGrid>
+      </Grid>
 
       <AnimeListFiltersItems
         filters={filters}

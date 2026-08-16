@@ -32,7 +32,7 @@ function AnimeListPagination({ pagination, onPageChange }) {
 
   return (
     <Flex
-      align={{ base: "flex-start", md: "center" }}
+      align="center"
       justify="space-between"
       direction={{ base: "column", md: "row" }}
       gap="4"

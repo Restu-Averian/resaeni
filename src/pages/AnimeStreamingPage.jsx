@@ -2,7 +2,7 @@ import { Box, Container, Separator, Stack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useMemo } from "react";
 import { useParams } from "react-router";
-import AnimeStreamingEpisodeNavigation from "../components/anime-streaming/AnimeStreamingEpisodeNavigation";
+import AnimeStreamingEpisodeNavigation from "../components/anime-streaming/anime-streaming-eps-navigation";
 import AnimeStreamingEpisodes from "../components/anime-streaming/anime-streaming-episodes";
 import AnimeStreamingError from "../components/anime-streaming/AnimeStreamingError";
 import AnimeStreamingHeader from "../components/anime-streaming/AnimeStreamingHeader";

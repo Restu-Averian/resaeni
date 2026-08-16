@@ -1,6 +1,6 @@
 import { Grid } from "@chakra-ui/react";
-import AnimeStreamingEpsNavigationEpsNum from "./anime-streaming-eps-navigation/AnimeStreamingEpsNavigationEpsNum";
-import AnimeStreamingEpsNavigationMain from "./anime-streaming-eps-navigation/AnimeStreamingEpsNavigationMain";
+import AnimeStreamingEpsNavigationEpsNum from "./AnimeStreamingEpsNavigationEpsNum";
+import AnimeStreamingEpsNavigationMain from "./AnimeStreamingEpsNavigationMain";
 
 function AnimeStreamingEpisodeNavigation({ episode }) {
   return (
