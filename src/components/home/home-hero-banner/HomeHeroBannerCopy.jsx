@@ -15,16 +15,12 @@ function HomeHeroBannerCopy({ hero, titleSize }) {
           fontSize={titleSize}
           lineHeight="1.1"
           mb="1"
-          maxW={{ base: "80%", md: "45%" }}
+          maxW="80%"
         >
           {hero?.title_en}
         </Heading>
 
-        <Text
-          color="fg.muted"
-          fontSize={{ base: "xs", md: "sm" }}
-          maxW={{ base: "80%", md: "45%" }}
-        >
+        <Text color="fg.muted" fontSize={{ base: "xs", md: "sm" }} maxW="80%">
           {hero?.type}{" "}
           {hero?.genres?.length > 0 ? `• ${hero?.genres.join(", ")}` : ""}
         </Text>
