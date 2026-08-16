@@ -1,19 +1,10 @@
-import {
-  Box,
-  Container,
-  Flex,
-  HStack,
-  IconButton,
-  Link,
-  Text,
-} from "@chakra-ui/react";
-import { Home, List, Search } from "lucide-react";
+import { Box, Container, Flex, HStack, Link, Text } from "@chakra-ui/react";
+import { Home, List } from "lucide-react";
 import { Link as RouterLink, Outlet, useLocation } from "react-router";
 
 const navItems = [
   { label: "Home", href: "/", icon: Home },
   { label: "Anime List", href: "/anime", icon: List },
-  { label: "Anime Finder", href: "/anime-finder", icon: Search },
 ];
 
 const isNavItemActive = (pathname, href) =>
@@ -85,17 +76,6 @@ function Navbar() {
               );
             })}
           </HStack>
-
-          <IconButton
-            aria-label="Search anime"
-            display={{ base: "inline-flex", md: "none" }}
-            variant="ghost"
-            size="lg"
-            color="fg.heading"
-            _hover={{ bg: "transparent", color: "accent.hover" }}
-          >
-            <Search size={34} strokeWidth={1.5} />
-          </IconButton>
         </Flex>
       </Container>
     </Box>
@@ -109,7 +89,7 @@ function MenuItemMobile() {
     <Flex
       as="nav"
       display={{ base: "grid", md: "none" }}
-      gridTemplateColumns="repeat(3, 1fr)"
+      gridTemplateColumns="repeat(2, 1fr)"
       position="fixed"
       zIndex="sticky"
       left="4"

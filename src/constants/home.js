@@ -1,12 +1,3 @@
-
-
-export const FINDER_PROMO = {
-  title: "Can’t remember the anime?",
-  description:
-    "Upload a screenshot from an anime episode and let Resaeni help identify it.",
-  cta: "Find the anime",
-};
-
 export const GENRE_METADATA = {
   Action: {
     description: "High-stakes battles and thrilling sequences.",
