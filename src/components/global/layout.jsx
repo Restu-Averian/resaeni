@@ -13,8 +13,13 @@ import { Link as RouterLink, Outlet, useLocation } from "react-router";
 const navItems = [
   { label: "Home", href: "/", icon: Home },
   { label: "Anime List", href: "/anime", icon: List },
-  { label: "Anime Finder", href: "#", icon: Search },
+  { label: "Anime Finder", href: "/anime-finder", icon: Search },
 ];
+
+const isNavItemActive = (pathname, href) =>
+  href === "/"
+    ? pathname === "/"
+    : pathname === href || pathname.startsWith(`${href}/`);
 
 function Navbar() {
   const { pathname } = useLocation();
@@ -51,10 +56,7 @@ function Navbar() {
 
           <HStack as="nav" display={{ base: "none", md: "flex" }} gap="9">
             {navItems.map((item) => {
-              const isActive =
-                item.href === "/"
-                  ? pathname === "/"
-                  : pathname.startsWith(item.href);
+              const isActive = isNavItemActive(pathname, item.href);
 
               return (
                 <Link
@@ -124,8 +126,7 @@ function MenuItemMobile() {
     >
       {navItems.map((item) => {
         const Icon = item.icon;
-        const isActive =
-          item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+        const isActive = isNavItemActive(pathname, item.href);
 
         return (
           <Link

@@ -38,28 +38,19 @@ function AnimeStreamingPage() {
     enabled: isValidMalId && isValidEpisodeNumber,
   });
 
-  const {
-    episode,
-    currentEpisode,
-    selectedEmbedUrl,
-  } = useMemo(() => {
+  const { episode, currentEpisode, selectedEmbedUrl } = useMemo(() => {
     const episode = episodeQuery.data;
 
     const links = episode?.links ?? [];
 
-    const episodes = episode?.items ?? [];
-
-    const currentEpisode = episodes.find(
-      (item) => Number(item.episode_number) === currentEpisodeNumber,
-    );
     const selectedEmbedUrl = links[0]?.embed_url;
 
     return {
       episode,
-      currentEpisode,
+      currentEpisode: episode,
       selectedEmbedUrl,
     };
-  }, [episodeQuery.data, currentEpisodeNumber]);
+  }, [episodeQuery.data]);
 
   if (!isValidMalId || !isValidEpisodeNumber) {
     return <AnimeStreamingNotFound />;

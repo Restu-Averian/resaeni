@@ -1,5 +1,6 @@
 import { ArrowRight, ScanSearch } from "lucide-react";
 import { Box, Flex, HStack, Link, Stack, Text } from "@chakra-ui/react";
+import { Link as RouterLink } from "react-router";
 
 function HomeFinderAnime({ promo }) {
   return (
@@ -96,7 +97,8 @@ function HomeFinderAnime({ promo }) {
         </Stack>
 
         <Link
-          href="#"
+          as={RouterLink}
+          to="/anime-finder"
           flex="0 0 auto"
           color="accent.primary"
           fontFamily="heading"
@@ -112,7 +114,8 @@ function HomeFinderAnime({ promo }) {
       </Stack>
 
       <Link
-        href="#"
+        as={RouterLink}
+        to="/anime-finder"
         display={{ base: "inline-flex", md: "none" }}
         alignSelf="flex-start"
         alignItems="center"

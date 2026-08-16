@@ -68,7 +68,9 @@ function AnimeDetailsCharacters({ malId, enabled }) {
             <Box
               display={{ base: "none", xl: "block" }}
               minW="0"
-              overflow="hidden"
+              position="sticky"
+              top="36"
+              alignSelf="start"
               opacity={hasSelectedCharacter ? 1 : 0}
               transition="opacity 0.2s ease"
             >

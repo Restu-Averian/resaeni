@@ -117,6 +117,7 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
       previous_episode_number: previousEpisodeNumber,
       next_episode_number: nextEpisodeNumber,
       links: linksResult.rows as unknown as EpisodeLinkRow[],
+      thumbnail_url: episode?.thumbnail_url,
     });
   } catch {
     return databaseUnavailable(c);

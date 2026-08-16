@@ -190,8 +190,6 @@ function AnimeDetailsVoiceActorsPanel({
       layerStyle="panelElevated"
       p={{ base: "5", md: "6" }}
       borderColor="accent.warm"
-      position="sticky"
-      top="6"
     >
       <VoiceActorsContent character={character} onClose={onClose} />
     </Box>
