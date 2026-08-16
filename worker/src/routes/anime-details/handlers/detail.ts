@@ -1,8 +1,6 @@
 import { createDatabaseClient } from "../../../db/client";
-import { errorResponse } from "../../../utils/response";
+import { databaseUnavailable, errorResponse } from "../../../utils/response";
 import {
-  databaseUnavailable,
-  invalidMalId,
   parseAired,
   parseGenres,
   parseMalId,
@@ -15,7 +13,10 @@ import type {
 export const handleAnimeDetails = async (c: AnimeDetailsContext) => {
   const malId = parseMalId(c.req.param("mal_id"));
   if (!malId) {
-    return invalidMalId(c);
+    return c.json(
+      errorResponse("INVALID_MAL_ID", "MAL ID must be a positive number"),
+      400,
+    );
   }
 
   if (!c.env.TURSO_DATABASE_URL || !c.env.TURSO_AUTH_TOKEN) {

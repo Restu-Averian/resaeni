@@ -1,9 +1,6 @@
 import { createDatabaseClient } from "../../../db/client";
-import { errorResponse } from "../../../utils/response";
+import { databaseUnavailable, errorResponse } from "../../../utils/response";
 import {
-  databaseUnavailable,
-  invalidEpisodeNumber,
-  invalidMalId,
   normalizeNullableEpisodeNumber,
   parseEpisodeNumber,
   parseMalId,
@@ -19,13 +16,22 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
   const malId = parseMalId(c.req.param("mal_id"));
 
   if (!malId) {
-    return invalidMalId(c);
+    return c.json(
+      errorResponse("INVALID_MAL_ID", "MAL ID must be a positive number"),
+      400,
+    );
   }
 
   const episodeNumber = parseEpisodeNumber(c.req.param("episode_number"));
 
   if (!episodeNumber) {
-    return invalidEpisodeNumber(c);
+    return c.json(
+      errorResponse(
+        "INVALID_EPISODE_NUMBER",
+        "Episode number must be a positive number",
+      ),
+      400,
+    );
   }
 
   if (!c.env.TURSO_DATABASE_URL || !c.env.TURSO_AUTH_TOKEN) {

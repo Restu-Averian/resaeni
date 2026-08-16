@@ -1,6 +1,3 @@
-import { errorResponse } from "../../utils/response";
-import type { AnimeDetailsContext } from "./types";
-
 const ANIME_DETAILS_DEFAULT_LIMIT = 24;
 const ANIME_DETAILS_MAX_LIMIT = 50;
 const ANIME_DETAILS_MONTHS: Record<string, string> = {
@@ -117,34 +114,6 @@ export const parseAired = (value: string | null, season: string | null) => {
     aired_to: airedTo,
     year,
   };
-};
-
-export const databaseUnavailable = (c: AnimeDetailsContext) => {
-  console.error("Anime details database unavailable.");
-  return c.json(
-    errorResponse(
-      "DATABASE_UNAVAILABLE",
-      "Database is temporarily unavailable",
-    ),
-    503,
-  );
-};
-
-export const invalidMalId = (c: AnimeDetailsContext) => {
-  return c.json(
-    errorResponse("INVALID_MAL_ID", "MAL ID must be a positive number"),
-    400,
-  );
-};
-
-export const invalidEpisodeNumber = (c: AnimeDetailsContext) => {
-  return c.json(
-    errorResponse(
-      "INVALID_EPISODE_NUMBER",
-      "Episode number must be a positive number",
-    ),
-    400,
-  );
 };
 
 export const normalizeNullableEpisodeNumber = (value: unknown): number | null => {
