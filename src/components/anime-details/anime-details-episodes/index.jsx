@@ -1,11 +1,30 @@
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import AnimeDetailsEpisodesItem from "./AnimeDetailsEpisodesItem";
 import AnimeDetailsHeaderSection from "../AnimeDetailsHeaderSection";
 
 function AnimeDetailsEpisodes({ malId, episodes, pagination, isError }) {
   const scrollerRef = useRef(null);
+  const [hasOverflow, setHasOverflow] = useState(false);
   const total = pagination?.total ?? episodes.length;
+
+  useEffect(() => {
+    const checkOverflow = () => {
+      if (scrollerRef.current) {
+        const { scrollWidth, clientWidth } = scrollerRef.current;
+        setHasOverflow(scrollWidth > clientWidth);
+      }
+    };
+
+    checkOverflow();
+
+    const resizeObserver = new ResizeObserver(checkOverflow);
+    if (scrollerRef.current) {
+      resizeObserver.observe(scrollerRef.current);
+    }
+
+    return () => resizeObserver.disconnect();
+  }, [episodes]);
 
   const scrollBy = (direction) => {
     scrollerRef.current?.scrollBy({
@@ -24,7 +43,7 @@ function AnimeDetailsEpisodes({ malId, episodes, pagination, isError }) {
               {total} episodes
             </Text>
           }
-          showArrows={episodes.length > 0}
+          showArrows={hasOverflow}
           onScroll={scrollBy}
         />
 
