@@ -8,13 +8,14 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { Link as RouterLink, useParams } from "react-router";
 import AnimeDetailsCharacters from "../components/anime-details/anime-details-character";
 import AnimeDetailsEpisodes from "../components/anime-details/anime-details-episodes";
 import AnimeDetailsHero from "../components/anime-details/anime-details-hero";
 import AnimeDetailsOverview from "../components/anime-details/AnimeDetailsOverview";
 import AnimeDetailsSynopsis from "../components/anime-details/AnimeDetailsSynopsis";
+import AnimeDetailsTabs from "../components/anime-details/AnimeDetailsTabs";
 import AnimeDetailsSkeleton from "../components/skeletons/anime-details/AnimeDetailsSkeleton";
 import { ANIME_DETAILS_ITEMS_LIMIT } from "../constants/anime-details";
 import {
@@ -27,6 +28,7 @@ function AnimeDetailsPage() {
   const { mal_id: malId } = useParams();
 
   const episodesRef = useRef(null);
+  const [activeTab, setActiveTab] = useState("overview");
 
   const isValidMalId = /^\d+$/.test(malId ?? "") && Number(malId) > 0;
 
@@ -57,7 +59,14 @@ function AnimeDetailsPage() {
   });
 
   const jumpToEpisodes = () => {
-    episodesRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActiveTab("overview");
+
+    requestAnimationFrame(() => {
+      episodesRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
   };
 
   if (!isValidMalId) {
@@ -113,31 +122,38 @@ function AnimeDetailsPage() {
         px={{ base: "4", md: "8", xl: "12" }}
         py={{ base: "8", md: "12" }}
       >
-        <Stack gap={{ base: "9", md: "12" }}>
-          <Grid
-            templateColumns={{ base: "1fr", lg: "minmax(0, 1fr) 360px" }}
-            gap={{ base: "5", md: "6" }}
-            alignItems="start"
-          >
-            <AnimeDetailsSynopsis synopsis={anime.synopsis} />
+        <AnimeDetailsTabs
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          overviewContent={
+            <Stack gap={{ base: "9", md: "12" }}>
+              <Grid
+                templateColumns={{ base: "1fr", lg: "minmax(0, 1fr) 360px" }}
+                gap={{ base: "5", md: "6" }}
+                alignItems="start"
+              >
+                <AnimeDetailsSynopsis synopsis={anime.synopsis} />
 
-            <AnimeDetailsOverview anime={anime} />
-          </Grid>
+                <AnimeDetailsOverview anime={anime} />
+              </Grid>
 
-          <Box ref={episodesRef}>
-            <AnimeDetailsEpisodes
-              malId={malId}
-              episodes={episodes}
-              pagination={episodesQuery.data?.pagination}
-              isError={episodesQuery.isError}
+              <Box ref={episodesRef}>
+                <AnimeDetailsEpisodes
+                  malId={malId}
+                  episodes={episodes}
+                  pagination={episodesQuery.data?.pagination}
+                  isError={episodesQuery.isError}
+                />
+              </Box>
+            </Stack>
+          }
+          charactersContent={
+            <AnimeDetailsCharacters
+              characters={characters}
+              isError={charactersQuery.isError}
             />
-          </Box>
-
-          <AnimeDetailsCharacters
-            characters={characters}
-            isError={charactersQuery.isError}
-          />
-        </Stack>
+          }
+        />
       </Container>
     </Box>
   );

@@ -18,6 +18,13 @@ function AnimeDetailsCharacters({ characters, isError }) {
       <Stack gap="4">
         <AnimeDetailsHeaderSection
           title="Characters & Voice Cast"
+          suffixTitle={
+            characters.length > 0 ? (
+              <Text color="accent.primary" fontSize="lg">
+                {characters.length}
+              </Text>
+            ) : null
+          }
           showArrows={characters.length > 0}
           onScroll={scrollBy}
         />

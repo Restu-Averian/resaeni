@@ -9,9 +9,9 @@ function AnimeDetailsSynopsis({ synopsis }) {
 
         <Text
           color="fg.default"
-          lineHeight="1.9"
+          textStyle="body"
+          lineHeight="1.8"
           whiteSpace="pre-line"
-          fontSize={{ base: "md", md: "lg" }}
         >
           {synopsis || "No synopsis available."}
         </Text>
