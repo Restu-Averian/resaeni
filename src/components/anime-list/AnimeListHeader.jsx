@@ -7,18 +7,19 @@ function AnimeListHeader() {
         as="h1"
         textStyle="display"
         color="fg.heading"
-        fontSize={{ base: "4xl", md: "6xl" }}
+        fontSize={{ base: "6xl", md: "7xl" }}
+        lineHeight="0.95"
       >
-        Anime List
+        Aeni Library
       </Heading>
       <Stack
         gap="1"
         color="fg.muted"
-        fontSize={{ base: "sm", md: "md" }}
-        lineHeight="1.65"
+        fontSize={{ base: "xl", md: "md" }}
+        lineHeight="1.45"
       >
-        <Text>Explore every anime available in Resaeni.</Text>
-        <Text>Find something familiar or discover something new.</Text>
+        <Text>Explore the best of Korean animation,</Text>
+        <Text>from series to films.</Text>
       </Stack>
     </Stack>
   );

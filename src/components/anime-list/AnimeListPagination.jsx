@@ -35,17 +35,21 @@ function AnimeListPagination({ pagination, onPageChange }) {
       align="center"
       justify="space-between"
       direction={{ base: "column", md: "row" }}
-      gap="4"
-      pt="1"
+      gap={{ base: "3", md: "4" }}
+      pt={{ base: "1", md: "2" }}
     >
-      <Text color="fg.muted" fontSize="sm">
-        Showing {start}-{end} of {total} anime
+      <Text
+        color="fg.muted"
+        fontSize={{ base: "lg", md: "sm" }}
+        alignSelf={{ base: "flex-start", md: "center" }}
+      >
+        Showing {start}-{end} of {total} Aeni
       </Text>
 
-      <HStack gap="2">
+      <HStack gap={{ base: "4", md: "2" }}>
         <Button
           variant="outline"
-          size="sm"
+          size={{ base: "lg", md: "sm" }}
           disabled={page <= 1}
           onClick={() => onPageChange(page - 1)}
         >
@@ -58,8 +62,8 @@ function AnimeListPagination({ pagination, onPageChange }) {
             <Button
               key={pageNumber}
               variant={page === pageNumber ? "solid" : "outline"}
-              size="sm"
-              minW="38px"
+              size={{ base: "lg", md: "sm" }}
+              minW={{ base: "58px", md: "38px" }}
               px="0"
               onClick={() => onPageChange(pageNumber)}
             >
@@ -70,7 +74,7 @@ function AnimeListPagination({ pagination, onPageChange }) {
 
         <Button
           variant="outline"
-          size="sm"
+          size={{ base: "lg", md: "sm" }}
           disabled={page >= total_pages}
           onClick={() => onPageChange(page + 1)}
         >

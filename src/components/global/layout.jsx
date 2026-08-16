@@ -4,7 +4,7 @@ import { Link as RouterLink, Outlet, useLocation } from "react-router";
 
 const navItems = [
   { label: "Home", href: "/", icon: Home },
-  { label: "Anime List", href: "/anime", icon: List },
+  { label: "Library", href: "/anime", icon: List },
 ];
 
 const isNavItemActive = (pathname, href) =>

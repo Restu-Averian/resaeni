@@ -5,6 +5,7 @@ export type AnimeDetailsRow = {
   id: string;
   title_en: string | null;
   title_romaji: string | null;
+  title_native: string | null;
   type: string | null;
   status: string | null;
   season: string | null;

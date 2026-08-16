@@ -1,14 +1,7 @@
 import { createDatabaseClient } from "../../../db/client";
 import { databaseUnavailable, errorResponse } from "../../../utils/response";
-import {
-  parseAired,
-  parseGenres,
-  parseMalId,
-} from "../utils";
-import type {
-  AnimeDetailsContext,
-  AnimeDetailsRow,
-} from "../types";
+import { parseAired, parseGenres, parseMalId } from "../utils";
+import type { AnimeDetailsContext, AnimeDetailsRow } from "../types";
 
 export const handleAnimeDetails = async (c: AnimeDetailsContext) => {
   const malId = parseMalId(c.req.param("mal_id"));
@@ -32,6 +25,7 @@ export const handleAnimeDetails = async (c: AnimeDetailsContext) => {
 						id,
 						title_en,
 						title_romaji,
+						title_native,
 						type,
 						status,
 						season,
@@ -65,6 +59,7 @@ export const handleAnimeDetails = async (c: AnimeDetailsContext) => {
       id: Number(row.id),
       title_en: row.title_en,
       title_romaji: row.title_romaji,
+      title_native: row.title_native,
       type: row.type,
       status: row.status,
       episodes_count: Number(episodeCountResult.rows[0]?.total ?? 0),

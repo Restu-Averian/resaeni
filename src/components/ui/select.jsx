@@ -32,10 +32,14 @@ export function Select({
   options,
   value,
   onChange,
+  showPrefixLabel = true,
+  triggerWidth = "fit-content",
+  minH = "58px",
 }) {
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const isMobile = useBreakpointValue({ base: true, lg: false });
   const [isOpen, setIsOpen] = useState(false);
   const [search, setSearch] = useState("");
+  const hasPrefixIcon = Boolean(Icon);
 
   const collection = useMemo(
     () =>
@@ -64,49 +68,52 @@ export function Select({
   const triggerContent = (
     <Grid
       position="relative"
-      templateColumns="auto auto auto auto"
-      w="fit-content"
+      templateColumns={
+        showPrefixLabel
+          ? "auto auto auto auto"
+          : hasPrefixIcon
+            ? "auto minmax(0, 1fr) auto"
+            : "minmax(0, 1fr) auto"
+      }
+      w={triggerWidth}
       alignItems="center"
       gap="3"
-      minH="58px"
+      minH={minH}
       px="4"
       border="1px solid"
       borderColor="border.default"
-      borderRadius="control"
-      bg="bg.surface"
+      borderRadius="8px"
+      bg="rgba(4, 24, 41, 0.42)"
       cursor="pointer"
       onClick={() => isMobile && setIsOpen(true)}
+      _hover={{ borderColor: "border.emphasized" }}
       _focusVisible={{
         outline: "2px solid",
         outlineColor: "accent.primary",
         outlineOffset: "-1px",
       }}
     >
-      <Box color="accent.primary">
-        {Icon && <Icon size={19} strokeWidth={1.55} />}
-      </Box>
+      {hasPrefixIcon && (
+        <Box color="accent.primary">
+          <Icon size={19} strokeWidth={1.55} />
+        </Box>
+      )}
 
-      <Text color="fg.muted" fontSize="sm">
-        {prefixLabel}
-      </Text>
+      {showPrefixLabel && (
+        <Text color="fg.muted" fontSize={{ base: "md", lg: "sm" }}>
+          {prefixLabel}
+        </Text>
+      )}
 
       <Box
         color="fg.heading"
-        fontSize="sm"
+        fontSize={{ base: "md", lg: "sm" }}
         fontWeight="500"
         pr="1"
         textAlign="left"
         whiteSpace="nowrap"
       >
-        {isMobile ? (
-          value ? (
-            selectedLabel
-          ) : (
-            prefixLabel
-          )
-        ) : (
-          <ChakraSelect.ValueText placeholder={prefixLabel} />
-        )}
+        {value === "Any" && showPrefixLabel ? "" : selectedLabel || prefixLabel}
       </Box>
 
       <Box color="fg.subtle" pointerEvents="none">

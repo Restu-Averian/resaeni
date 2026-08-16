@@ -28,7 +28,7 @@ function AnimeListPage() {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [page, setPage] = useState(1);
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const isMobile = useBreakpointValue({ base: true, lg: false });
 
   const handleSearchChange = useCallback((value) => {
     setSearch(value);
@@ -54,8 +54,6 @@ function AnimeListPage() {
     search: search || undefined,
     genre: filters.genre === "Any" ? undefined : filters.genre,
     type: filters.type === "Any" ? undefined : filters.type,
-    status: filters.status === "Any" ? undefined : filters.status,
-    season: filters.season === "Any" ? undefined : filters.season,
     order: ORDER_VALUE_MAP[filters.order] ?? "highest_rated",
     page,
     limit: LIMIT,
@@ -75,24 +73,24 @@ function AnimeListPage() {
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
       <Container
         maxW="1440px"
-        px={{ base: "4", md: "8", xl: "12" }}
+        px={{ base: "5", md: "8", xl: "12" }}
         py={{ base: "7", md: "10" }}
       >
         <Stack gap={{ base: "7", md: "8" }}>
           {isMobile && <AnimeListHeader />}
 
           <Stack
-            position="sticky"
-            top={{ base: "88px", md: "72px" }}
+            position={{ base: "static", lg: "sticky" }}
+            top={{ lg: "72px" }}
             zIndex="10"
             bg="bg.canvas"
             gap={{ base: "7", md: "8" }}
             pb="2"
           >
             <Flex
-              align={{ base: "stretch", md: "end" }}
+              align={{ base: "stretch", lg: "end" }}
               justify="space-between"
-              direction={{ base: "column", md: "row" }}
+              direction={{ base: "column", lg: "row" }}
               gap="6"
             >
               {!isMobile && <AnimeListHeader />}

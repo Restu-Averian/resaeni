@@ -8,20 +8,22 @@ function AnimeListDatasItemSkeleton() {
       overflow="hidden"
       boxShadow="media"
       borderColor="border.subtle"
+      position="relative"
+      aspectRatio={{ base: "1.43", lg: "1.04" }}
     >
-      <Box aspectRatio="1.55" overflow="hidden">
-        <Skeleton w="full" h="full" />
-      </Box>
+      <Skeleton w="full" h="full" />
 
       <Flex
+        position="absolute"
+        inset="0"
+        bgImage="linear-gradient(180deg, rgba(3, 17, 31, 0.02) 0%, rgba(3, 17, 31, 0.12) 36%, rgba(3, 17, 31, 0.68) 74%, rgba(3, 17, 31, 0.92) 100%)"
         direction="column"
-        justify="center"
-        minH="92px"
-        gap="3"
-        px="4"
-        py="4"
+        justify="flex-end"
+        gap="2"
+        px={{ base: "3", md: "4" }}
+        py={{ base: "3", md: "4" }}
       >
-        <SkeletonText noOfLines={1} skeletonHeight="5" width="80%" />
+        <SkeletonText noOfLines={2} skeletonHeight="4" width="80%" />
 
         <HStack gap="2">
           <Skeleton height="3" width="6" />

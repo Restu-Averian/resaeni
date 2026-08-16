@@ -1,5 +1,6 @@
 import { createDatabaseClient } from "../../../db/client";
 import { databaseUnavailable, errorResponse } from "../../../utils/response";
+import { parseAired } from "../../anime-details/utils";
 import type { AnimeListContext } from "../types";
 import { orderByMap, parseOrder, parsePagination, trimQuery } from "../utils";
 
@@ -27,8 +28,6 @@ export const handleAnimeList = async (c: AnimeListContext) => {
   const search = trimQuery(c.req.query("search"));
   const genre = trimQuery(c.req.query("genre"));
   const type = trimQuery(c.req.query("type"));
-  const status = trimQuery(c.req.query("status"));
-  const season = trimQuery(c.req.query("season"));
   const order = parseOrder(c.req.query("order"));
 
   const conditions: string[] = [];
@@ -54,16 +53,6 @@ export const handleAnimeList = async (c: AnimeListContext) => {
     args.push(type);
   }
 
-  if (status) {
-    conditions.push("status = ? COLLATE NOCASE");
-    args.push(status);
-  }
-
-  if (season) {
-    conditions.push("season LIKE ? COLLATE NOCASE");
-    args.push(`${season}%`);
-  }
-
   const whereClause =
     conditions.length > 0 ? `WHERE ${conditions.join(" AND ")}` : "";
 
@@ -72,7 +61,21 @@ export const handleAnimeList = async (c: AnimeListContext) => {
     const [itemsResult, countResult] = await Promise.all([
       dbClient.execute({
         sql: `
-					SELECT id, title_en, title_romaji, rating, type, photo
+					SELECT
+						id,
+						title_en,
+						title_romaji,
+            title_native,
+						rating,
+						type,
+						photo,
+						season,
+						aired,
+						(
+							SELECT COUNT(*)
+							FROM episodes
+							WHERE episodes.anime_id = anime_info.id
+						) AS episodes_count
 					FROM anime_info
 					${whereClause}
 					ORDER BY ${orderByMap[order]}
@@ -93,14 +96,21 @@ export const handleAnimeList = async (c: AnimeListContext) => {
     const total = Number(countResult.rows[0]?.total ?? 0);
     const items = itemsResult.rows.map((row) => {
       const item = row as Record<string, unknown>;
+      const aired = parseAired(
+        typeof item.aired === "string" ? item.aired : null,
+        typeof item.season === "string" ? item.season : null,
+      );
 
       return {
         id: String(item.id),
         title_en: String(item.title_en ?? ""),
         title_romaji: String(item.title_romaji ?? ""),
+        title_native: String(item.title_native ?? ""),
         rating: Number(item.rating ?? 0),
         type: String(item.type ?? ""),
         photo: typeof item.photo === "string" ? item.photo : null,
+        episodes_count: Number(item.episodes_count ?? 0),
+        year: aired.year,
       };
     });
 
