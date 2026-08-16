@@ -1,4 +1,3 @@
-import { Star } from "lucide-react";
 import { Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 
@@ -8,74 +7,58 @@ function HomePickCardItem({ pick, variant = "desktop" }) {
 
   return (
     <Flex
-      layerStyle="interactiveSurface"
-      direction={isMobile ? "column" : "row"}
-      overflow="hidden"
-      w={isMobile ? "150px" : "auto"}
-      h={isMobile ? "214px" : { base: "168px", md: "160px", xl: "168px" }}
-      align="stretch"
-      boxShadow="media"
+      direction="column"
+      w={isMobile ? "260px" : "auto"}
+      minW="0"
       cursor="pointer"
       onClick={() => navigate(`/anime/${pick?.id}`)}
-      transition="transform 0.2s ease, box-shadow 0.2s ease"
+      transition="transform 0.2s ease"
       _hover={{
         transform: "translateY(-2px)",
-        boxShadow: "mediaHover",
       }}
     >
       <Box
-        flex={isMobile ? "0 0 130px" : "0 0 54%"}
-        maxW={isMobile ? "none" : "220px"}
-        minW={isMobile ? "0" : "150px"}
+        aspectRatio={isMobile ? "1.55" : "2.62"}
         overflow="hidden"
+        border="1px solid"
+        borderColor="border.default"
+        borderRadius="8px"
+        boxShadow="media"
       >
         <Image
           src={pick?.photo}
-          alt=""
+          alt={pick?.title_en || pick?.title_romaji || "Anime poster"}
           w="100%"
           h="100%"
           objectFit="cover"
-          objectPosition="center top"
+          objectPosition="center center"
           filter="saturate(0.92) contrast(1.05)"
         />
       </Box>
 
-      <Flex
-        direction="column"
-        justify={isMobile ? "space-between" : "center"}
-        gap={isMobile ? "2" : "6"}
-        px={isMobile ? "3" : "5"}
-        py={isMobile ? "3" : "4"}
-        minW="0"
-        flex="1"
-      >
+      <Flex direction="column" gap="1" pt="2" minW="0">
         <Text
           textStyle="cardTitle"
           color="fg.heading"
-          fontSize={isMobile ? "sm" : { base: "md", lg: "lg", xl: "xl" }}
-          noOfLines={2}
-          lineHeight="1.3"
+          fontSize={isMobile ? "2xl" : { md: "2xl", xl: "2xl" }}
+          lineClamp="2"
+          lineHeight="1.1"
         >
           {pick?.title_en}
         </Text>
 
-        <HStack
-          gap="1.5"
-          color="fg.muted"
-          fontSize={isMobile ? "xs" : { base: "xs", xl: "sm" }}
+        <Text
+          color="fg.default"
+          fontSize={isMobile ? "lg" : "md"}
+          lineClamp="1"
         >
-          <Star
-            size={isMobile ? 12 : 16}
-            fill="var(--resaeni-colors-rating-default)"
-            color="var(--resaeni-colors-rating-default)"
-            strokeWidth={1.3}
-          />
+          {pick?.title_romaji}
+        </Text>
 
-          <Text>{pick.rating}</Text>
-
+        <HStack gap="2" color="fg.muted" fontSize={isMobile ? "md" : "md"}>
+          <Text>{pick?.type}</Text>
           <Text color="accent.warmMuted">•</Text>
-
-          <Text>{pick.type}</Text>
+          <Text>{pick.rating}</Text>
         </HStack>
       </Flex>
     </Flex>

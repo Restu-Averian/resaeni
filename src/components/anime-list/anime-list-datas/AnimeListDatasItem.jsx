@@ -12,55 +12,53 @@ function AnimeListDatasItem({ anime }) {
   ].filter(Boolean);
 
   return (
-    <Box
+    <Flex
       as={RouterLink}
       to={`/anime/${anime.id}`}
-      display="block"
+      direction="column"
       w="full"
       textAlign="left"
-      layerStyle="interactiveSurface"
-      overflow="hidden"
-      boxShadow="media"
       cursor="pointer"
-      position="relative"
-      aspectRatio={{ base: "1.43", lg: "1.04" }}
       role="group"
-      borderColor="border.subtle"
-      transition="transform 0.2s ease, border-color 0.2s ease"
+      textDecoration="none"
+      transition="transform 0.2s ease"
       _hover={{
         transform: "translateY(-2px)",
-        borderColor: "brand.emphasized",
+        textDecoration: "none",
       }}
     >
-      <Image
-        src={anime.photo}
-        alt={anime.title_en || anime.title_romaji || "Anime poster"}
-        w="full"
-        h="full"
-        objectFit="cover"
-        objectPosition="center"
-        filter="saturate(0.94) contrast(1.04)"
-        transition="transform 0.3s ease"
-        _groupHover={{ transform: "scale(1.05)" }}
-      />
+      <Box
+        aspectRatio="0.73"
+        overflow="hidden"
+        border="1px solid"
+        borderColor="border.default"
+        borderRadius="8px"
+        boxShadow="media"
+      >
+        <Image
+          src={anime.photo}
+          alt={anime.title_en || anime.title_romaji || "Anime poster"}
+          w="full"
+          h="full"
+          objectFit="cover"
+          objectPosition="center top"
+          filter="saturate(0.94) contrast(1.04)"
+          transition="transform 0.3s ease"
+          _groupHover={{ transform: "scale(1.04)" }}
+        />
+      </Box>
 
       <Flex
-        position="absolute"
-        inset="0"
-        bgImage="linear-gradient(180deg, rgba(3, 17, 31, 0.02) 0%, rgba(3, 17, 31, 0.12) 36%, rgba(3, 17, 31, 0.68) 74%, rgba(3, 17, 31, 0.92) 100%)"
         direction="column"
-        justify="flex-end"
-        px={{ base: "4", md: "4" }}
-        py={{ base: "3", md: "4" }}
-        gap="1"
-        textShadow="0 1px 10px rgba(3, 17, 31, 0.85)"
+        gap={{ base: "1.5", md: "2" }}
+        pt={{ base: "3", md: "4" }}
+        minW="0"
       >
         <Text
           textStyle="cardTitle"
           color="fg.heading"
-          fontSize={{ base: "md", lg: "lg" }}
-          lineHeight="1.2"
-          textTransform="uppercase"
+          fontSize={{ base: "xl", md: "2xl", xl: "3xl" }}
+          lineHeight="1.05"
           lineClamp="2"
         >
           {anime.title_en || anime.title_romaji}
@@ -68,7 +66,7 @@ function AnimeListDatasItem({ anime }) {
 
         <Text
           color="fg.default"
-          fontSize={{ base: "sm", lg: "md" }}
+          fontSize={{ base: "md", md: "lg" }}
           lineClamp="1"
         >
           {anime.title_native}
@@ -78,7 +76,7 @@ function AnimeListDatasItem({ anime }) {
           <HStack
             gap="1.5"
             color="fg.muted"
-            fontSize={{ base: "sm", lg: "xs" }}
+            fontSize={{ base: "sm", md: "md" }}
             mt="1"
             flexWrap="wrap"
           >
@@ -91,7 +89,7 @@ function AnimeListDatasItem({ anime }) {
           </HStack>
         )}
       </Flex>
-    </Box>
+    </Flex>
   );
 }
 

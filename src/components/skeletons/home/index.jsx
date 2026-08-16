@@ -1,6 +1,5 @@
 import HomeHeroBannerSkeleton from "./HomeHeroBannerSkeleton";
 import HomePicksSkeleton from "./HomePicksSkeleton";
-import HomeExploreGenreSkeleton from "./HomeExploreGenreSkeleton";
 
 function HomeSkeleton() {
   return (
@@ -8,8 +7,6 @@ function HomeSkeleton() {
       <HomeHeroBannerSkeleton />
 
       <HomePicksSkeleton />
-
-      <HomeExploreGenreSkeleton />
     </>
   );
 }

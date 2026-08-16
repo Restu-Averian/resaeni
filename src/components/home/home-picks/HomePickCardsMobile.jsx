@@ -11,13 +11,9 @@ function HomePickCardsMobile({ picks }) {
         "&::-webkit-scrollbar": { display: "none" },
       }}
     >
-      <HStack align="stretch" gap="4" w="max-content" pr="4">
+      <HStack align="stretch" gap="6" w="max-content" pr="4">
         {picks.map((pick) => (
-          <HomePickCardItem
-            key={pick.id}
-            pick={pick}
-            variant="mobile"
-          />
+          <HomePickCardItem key={pick.id} pick={pick} variant="mobile" />
         ))}
       </HStack>
     </Box>

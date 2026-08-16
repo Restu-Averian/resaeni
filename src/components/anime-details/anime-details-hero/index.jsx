@@ -13,7 +13,7 @@ function AnimeDetailsHero({ anime, onJumpToEpisodes }) {
       overflow="hidden"
       bgImage={`linear-gradient(90deg, rgba(3, 17, 31, 0.98) 0%, rgba(3, 17, 31, 0.88) 35%, rgba(3, 17, 31, 0.52) 70%, rgba(3, 17, 31, 0.82) 100%), linear-gradient(0deg, var(--resaeni-colors-bg-canvas) 0%, rgba(3, 17, 31, 0.08) 42%), url(${anime.banner_bg_img || anime.photo || placeholderImage})`}
       bgSize="cover"
-      bgPosition="center"
+      backgroundPosition="center"
       borderBottom="1px solid"
       borderColor="border.subtle"
     >

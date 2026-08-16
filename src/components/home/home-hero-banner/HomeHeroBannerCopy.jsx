@@ -1,61 +1,98 @@
-import { ArrowRight } from "lucide-react";
-import { Box, Button, Heading, Stack, Text } from "@chakra-ui/react";
+import { Play } from "lucide-react";
+import { Button, Heading, HStack, Stack, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router";
 
 function HomeHeroBannerCopy({ hero, titleSize }) {
   const navigate = useNavigate();
+  const episodeLabel = hero?.episodes_count
+    ? `${hero.episodes_count} ${hero.episodes_count === 1 ? "Episode" : "Episodes"}`
+    : null;
+  const metaItems = [hero?.year, hero?.type, episodeLabel].filter(Boolean);
 
   return (
-    <>
-      <Stack gap="1">
+    <Stack gap={{ base: "4", md: "4" }} align="flex-start" maxW="610px">
+      <Stack gap="2">
         <Heading
           as="h1"
           textStyle="display"
           color="fg.heading"
           fontSize={titleSize}
-          lineHeight="1.1"
-          mb="1"
-          maxW="80%"
+          lineHeight="0.92"
         >
           {hero?.title_en}
         </Heading>
 
-        <Text color="fg.muted" fontSize={{ base: "xs", md: "sm" }} maxW="80%">
-          {hero?.type}{" "}
-          {hero?.genres?.length > 0 ? `• ${hero?.genres.join(", ")}` : ""}
+        <Text
+          color="fg.heading"
+          fontSize={{ base: "2xl", md: "3xl" }}
+          lineHeight="1.1"
+        >
+          {hero?.title_native || hero?.title_romaji}
         </Text>
       </Stack>
 
-      <Box w="50px" h="1px" bg="accent.primary" opacity={0.7} my="3" />
+      {metaItems.length > 0 && (
+        <HStack color="fg.muted" fontSize={{ base: "md", md: "lg" }} gap="3">
+          {metaItems.map((item, index) => (
+            <HStack key={`${item}-${index}`} gap="3">
+              {index > 0 && <Text color="accent.primary">•</Text>}
+              <Text>{item}</Text>
+            </HStack>
+          ))}
+        </HStack>
+      )}
 
       <Text
         color="fg.muted"
-        fontSize={{ base: "xs", md: "md" }}
-        lineHeight={{ base: "1.45", md: "1.55" }}
-        mb={5}
+        fontSize={{ base: "md", md: "lg" }}
+        lineHeight="1.5"
         lineClamp={3}
-        maxW={{ base: "80%", md: "45%" }}
+        maxW="560px"
       >
         {hero?.description}
       </Text>
 
-      <Button
-        size={{ base: "sm", md: "md" }}
-        bg="#1c3a39"
-        color="#a5c8c5"
-        _hover={{ bg: "#234a49" }}
-        borderRadius="md"
-        px="4"
-        fontWeight="normal"
-        fontSize={{ base: "sm", md: "md" }}
-        border="1px solid"
-        borderColor="whiteAlpha.100"
-        onClick={() => navigate(`/anime/${hero?.id}`)}
+      <HStack
+        gap={{ base: "3", md: "5" }}
+        flexWrap="wrap"
+        pt={{ base: "4", md: "3" }}
       >
-        View Details
-        <ArrowRight size={16} strokeWidth={1.5} style={{ marginLeft: "6px" }} />
-      </Button>
-    </>
+        <Button
+          h={{ base: "56px", md: "58px" }}
+          minW={{ base: "200px", md: "194px" }}
+          bg="accent.primary"
+          color="fg.heading"
+          _hover={{ bg: "accent.hover" }}
+          borderRadius="8px"
+          fontFamily="heading"
+          fontSize={{ base: "xl", md: "lg" }}
+          fontWeight="700"
+          border="1px solid"
+          borderColor="whiteAlpha.300"
+          onClick={() => navigate(`/anime/${hero?.id}/episode/1`)}
+        >
+          <Play size={18} fill="currentColor" />
+          Watch Now
+        </Button>
+
+        <Button
+          h={{ base: "56px", md: "58px" }}
+          minW={{ base: "200px", md: "200px" }}
+          bg="transparent"
+          color="fg.heading"
+          _hover={{ bg: "whiteAlpha.100" }}
+          borderRadius="8px"
+          fontFamily="heading"
+          fontSize={{ base: "xl", md: "lg" }}
+          fontWeight="700"
+          border="1px solid"
+          borderColor="border.default"
+          onClick={() => navigate(`/anime/${hero?.id}`)}
+        >
+          View Details
+        </Button>
+      </HStack>
+    </Stack>
   );
 }
 
