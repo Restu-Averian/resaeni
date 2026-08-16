@@ -20,7 +20,6 @@ import AnimeDetailsSkeleton from "../components/skeletons/anime-details/AnimeDet
 import { ANIME_DETAILS_ITEMS_LIMIT } from "../constants/anime-details";
 import {
   getAnimeDetails,
-  getAnimeDetailsCharacters,
   getAnimeDetailsEpisodes,
 } from "../services/anime-details";
 
@@ -42,16 +41,6 @@ function AnimeDetailsPage() {
     queryKey: ["anime-details", malId, "episodes"],
     queryFn: () =>
       getAnimeDetailsEpisodes(malId, {
-        page: 1,
-        limit: ANIME_DETAILS_ITEMS_LIMIT,
-      }),
-    enabled: isValidMalId && detailsQuery.isSuccess,
-  });
-
-  const charactersQuery = useQuery({
-    queryKey: ["anime-details", malId, "characters"],
-    queryFn: () =>
-      getAnimeDetailsCharacters(malId, {
         page: 1,
         limit: ANIME_DETAILS_ITEMS_LIMIT,
       }),
@@ -111,7 +100,6 @@ function AnimeDetailsPage() {
 
   const anime = detailsQuery.data;
   const episodes = episodesQuery.data?.items ?? [];
-  const characters = charactersQuery.data?.items ?? [];
 
   return (
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "0" }}>
@@ -149,8 +137,8 @@ function AnimeDetailsPage() {
           }
           charactersContent={
             <AnimeDetailsCharacters
-              characters={characters}
-              isError={charactersQuery.isError}
+              malId={malId}
+              enabled={detailsQuery.isSuccess}
             />
           }
         />

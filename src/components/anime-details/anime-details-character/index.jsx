@@ -1,17 +1,31 @@
-import { Box, Flex, Stack, Text } from "@chakra-ui/react";
-import { useRef } from "react";
-import AnimeDetailsCharacterItem from "./AnimeDetailsCharacterItem";
+import { Box, Grid, Stack, Text, useBreakpointValue } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { ANIME_DETAILS_ITEMS_LIMIT } from "../../../constants/anime-details";
+import { getAnimeDetailsCharacters } from "../../../services/anime-details";
+import AnimeDetailsCharactersList from "./AnimeDetailsCharactersList";
+import AnimeDetailsVoiceActorsPanel from "./AnimeDetailsVoiceActorsPanel";
 import AnimeDetailsHeaderSection from "../AnimeDetailsHeaderSection";
 
-function AnimeDetailsCharacters({ characters, isError }) {
-  const scrollerRef = useRef(null);
+function AnimeDetailsCharacters({ malId, enabled }) {
+  const [selectedCharacterId, setSelectedCharacterId] = useState(null);
+  const isMobileDrawer = useBreakpointValue({ base: true, xl: false });
 
-  const scrollBy = (direction) => {
-    scrollerRef.current?.scrollBy({
-      left: direction * 520,
-      behavior: "smooth",
-    });
-  };
+  const charactersQuery = useQuery({
+    queryKey: ["anime-details", malId, "characters"],
+    queryFn: () =>
+      getAnimeDetailsCharacters(malId, {
+        page: 1,
+        limit: ANIME_DETAILS_ITEMS_LIMIT,
+      }),
+    enabled,
+  });
+
+  const characters = charactersQuery.data?.items ?? [];
+  const selectedCharacter = characters.find(
+    (character) => character.character_id === selectedCharacterId,
+  );
+  const hasSelectedCharacter = Boolean(selectedCharacter);
 
   return (
     <Box as="section">
@@ -25,11 +39,9 @@ function AnimeDetailsCharacters({ characters, isError }) {
               </Text>
             ) : null
           }
-          showArrows={characters.length > 0}
-          onScroll={scrollBy}
         />
 
-        {isError ? (
+        {charactersQuery.isError ? (
           <Box layerStyle="panel" p="5">
             <Text color="fg.muted">Failed to load characters.</Text>
           </Box>
@@ -38,25 +50,45 @@ function AnimeDetailsCharacters({ characters, isError }) {
             <Text color="fg.muted">No character data available.</Text>
           </Box>
         ) : (
-          <Flex
-            ref={scrollerRef}
-            gap="4"
-            overflowX="auto"
-            pb="2"
-            scrollSnapType="x proximity"
-            css={{
-              scrollbarWidth: "thin",
+          <Grid
+            templateColumns={{
+              base: "1fr",
+              xl: hasSelectedCharacter ? "minmax(0, 1fr) 440px" : "1fr 0px",
             }}
+            gap={{ base: "5", xl: hasSelectedCharacter ? "6" : "0" }}
+            alignItems="start"
+            transition="grid-template-columns 0.28s ease, gap 0.28s ease"
           >
-            {characters.map((character) => (
-              <AnimeDetailsCharacterItem
-                key={character.character_id}
-                character={character}
+            <AnimeDetailsCharactersList
+              characters={characters}
+              selectedCharacter={selectedCharacter}
+              onSelectCharacter={setSelectedCharacterId}
+            />
+
+            <Box
+              display={{ base: "none", xl: "block" }}
+              minW="0"
+              overflow="hidden"
+              opacity={hasSelectedCharacter ? 1 : 0}
+              transition="opacity 0.2s ease"
+            >
+              <AnimeDetailsVoiceActorsPanel
+                character={selectedCharacter}
+                onClose={() => setSelectedCharacterId(null)}
               />
-            ))}
-          </Flex>
+            </Box>
+          </Grid>
         )}
       </Stack>
+
+      {isMobileDrawer && (
+        <AnimeDetailsVoiceActorsPanel
+          character={selectedCharacter}
+          isDrawer
+          isOpen={Boolean(selectedCharacter)}
+          onClose={() => setSelectedCharacterId(null)}
+        />
+      )}
     </Box>
   );
 }

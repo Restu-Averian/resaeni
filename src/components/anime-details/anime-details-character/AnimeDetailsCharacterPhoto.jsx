@@ -1,10 +1,16 @@
 import { Avatar, Box, Image } from "@chakra-ui/react";
 
-function AnimeDetailsCharacterPhoto({ character }) {
+function AnimeDetailsCharacterPhoto({ character, isCompact }) {
+  const size = {
+    base: "96px",
+    md: isCompact ? "112px" : "144px",
+    xl: isCompact ? "112px" : "160px",
+  };
+
   return character.photo ? (
     <Box
-      w={{ base: "96px", md: "112px" }}
-      h={{ base: "96px", md: "112px" }}
+      w={size}
+      h={size}
       overflow="hidden"
       borderRadius="full"
       border="1px solid"
@@ -23,8 +29,8 @@ function AnimeDetailsCharacterPhoto({ character }) {
     </Box>
   ) : (
     <Avatar.Root
-      w={{ base: "96px", md: "112px" }}
-      h={{ base: "96px", md: "112px" }}
+      w={size}
+      h={size}
       bg="bg.surface"
       color="fg.heading"
       border="1px solid"
