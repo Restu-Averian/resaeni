@@ -1,8 +1,4 @@
-export const NAV_ITEMS = [
-  { label: "Home", href: "#", isActive: true },
-  { label: "Anime List", href: "#" },
-  { label: "Anime Finder", href: "#" },
-];
+
 
 export const FINDER_PROMO = {
   title: "Can’t remember the anime?",

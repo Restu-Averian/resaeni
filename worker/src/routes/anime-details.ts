@@ -189,18 +189,6 @@ const invalidEpisodeNumber = (c: AnimeDetailsContext) => {
   );
 };
 
-const normalizeEpisodeLinks = (rows: EpisodeLinkRow[]) => {
-  const urls = new Set<string>();
-
-  for (const row of rows) {
-    if (typeof row.embed_url !== "string") continue;
-
-    const url = row.embed_url.trim();
-    if (url) urls.add(url);
-  }
-
-  return Array.from(urls, (embed_url) => ({ embed_url }));
-};
 
 const normalizeNullableEpisodeNumber = (value: unknown): number | null => {
   const episodeNumber = Number(value);
@@ -431,9 +419,7 @@ animeDetailsRouter.get("/episodes/:episode_number", async (c) => {
       aired_at: episode.aired_at,
       previous_episode_number: previousEpisodeNumber,
       next_episode_number: nextEpisodeNumber,
-      links: normalizeEpisodeLinks(
-        linksResult.rows as unknown as EpisodeLinkRow[],
-      ),
+      links: linksResult.rows as unknown as EpisodeLinkRow[],
     });
   } catch {
     return databaseUnavailable(c);
