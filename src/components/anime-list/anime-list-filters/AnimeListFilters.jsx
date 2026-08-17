@@ -1,6 +1,7 @@
 import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import AnimeListFiltersItems from "./AnimeListFiltersItems";
+import AnimeListFiltersSkeleton from "../../skeletons/anime-list/AnimeListFiltersSkeleton";
 import { Select } from "../../ui/select";
 import {
   FILTER_OPTIONS,
@@ -19,10 +20,14 @@ function AnimeListFilters({
   );
   const orderFilter = FILTERS_CONFIG.find((filter) => filter.name === "order");
 
-  const { data: optionsData } = useQuery({
+  const { data: optionsData, isLoading } = useQuery({
     queryKey: ["anime-list-options"],
     queryFn: getAnimeListOptions,
   });
+
+  if (isLoading) {
+    return <AnimeListFiltersSkeleton />;
+  }
 
   const mergedOptions = {
     ...FILTER_OPTIONS,
