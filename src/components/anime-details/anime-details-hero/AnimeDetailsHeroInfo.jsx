@@ -33,6 +33,10 @@ function AnimeDetailsHeroInfo({ anime }) {
             {anime.title_romaji}
           </Text>
         )}
+
+        <Text color="fg.muted" fontSize={{ base: "md", md: "lg" }}>
+          {anime.title_romaji}
+        </Text>
       </Stack>
 
       <HStack

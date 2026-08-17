@@ -18,9 +18,9 @@ function AnimeDetailsHero({ anime, onJumpToEpisodes }) {
       borderColor="border.subtle"
     >
       <Flex
-        maxW="1440px"
+        maxW="1696px"
         mx="auto"
-        px={{ base: "4", md: "8", xl: "12" }}
+        px={{ base: "5", md: "12", xl: "0" }}
         pt={{ base: "8", md: "12", lg: "16" }}
         pb={{ base: "10", md: "14", lg: "16" }}
         gap={{ base: "7", md: "10", xl: "14" }}

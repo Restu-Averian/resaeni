@@ -102,12 +102,12 @@ function AnimeDetailsPage() {
   const episodes = episodesQuery.data?.items ?? [];
 
   return (
-    <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "0" }}>
+    <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
       <AnimeDetailsHero anime={anime} onJumpToEpisodes={jumpToEpisodes} />
 
       <Container
-        maxW="1440px"
-        px={{ base: "4", md: "8", xl: "12" }}
+        maxW="1696px"
+        px={{ base: "5", md: "12", xl: "0" }}
         py={{ base: "8", md: "12" }}
       >
         <AnimeDetailsTabs

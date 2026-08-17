@@ -1,9 +1,20 @@
-import { Box, Container, HStack, SimpleGrid, Skeleton, Stack } from "@chakra-ui/react";
+import {
+  Box,
+  Container,
+  HStack,
+  SimpleGrid,
+  Skeleton,
+  Stack,
+} from "@chakra-ui/react";
 
 function AnimeStreamingSkeleton() {
   return (
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
-      <Container maxW="1440px" px={{ base: "4", md: "8", xl: "12" }} py="7">
+      <Container
+        maxW="1696px"
+        px={{ base: "5", md: "12", xl: "0" }}
+        py={{ base: "7", md: "10" }}
+      >
         <Stack gap="6">
           <Stack gap="3">
             <Skeleton h="22px" w="190px" />

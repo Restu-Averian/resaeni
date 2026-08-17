@@ -1,11 +1,8 @@
-import { Stack, useBreakpointValue } from "@chakra-ui/react";
+import { Stack, Box, HStack } from "@chakra-ui/react";
 import HomeSectionHeader from "../HomeSectionHeader";
-import HomePickCardsDesktop from "./HomePickCardsDesktop";
-import HomePickCardsMobile from "./HomePickCardsMobile";
+import AnimeListDatasItem from "../../anime-list/anime-list-datas/AnimeListDatasItem";
 
 function HomePicksSection({ picks }) {
-  const isMobile = useBreakpointValue({ base: true, md: false });
-
   return (
     <Stack
       as="section"
@@ -20,11 +17,26 @@ function HomePicksSection({ picks }) {
     >
       <HomeSectionHeader title="Resaeni Picks" />
 
-      {isMobile ? (
-        <HomePickCardsMobile picks={picks} />
-      ) : (
-        <HomePickCardsDesktop picks={picks} />
-      )}
+      <Box
+        overflowX="auto"
+        pb={{ base: "2", md: "4" }}
+        css={{
+          scrollbarWidth: "none",
+          "&::-webkit-scrollbar": { display: "none" },
+        }}
+      >
+        <HStack align="stretch" gap={{ base: "3", md: "4", xl: "5" }}>
+          {picks.map((pick) => (
+            <Box
+              key={pick.id}
+              w={{ base: "140px", md: "180px", lg: "220px", xl: "260px" }}
+              flexShrink={0}
+            >
+              <AnimeListDatasItem anime={pick} />
+            </Box>
+          ))}
+        </HStack>
+      </Box>
     </Stack>
   );
 }

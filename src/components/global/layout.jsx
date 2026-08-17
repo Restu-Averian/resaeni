@@ -1,11 +1,8 @@
 import { Box, Container, Flex, HStack, Link, Text } from "@chakra-ui/react";
-import { Home, List } from "lucide-react";
+import { List } from "lucide-react";
 import { Link as RouterLink, Outlet, useLocation } from "react-router";
 
-const navItems = [
-  { label: "Home", href: "/", icon: Home },
-  { label: "Library", href: "/anime", icon: List },
-];
+const navItems = [{ label: "Library", href: "/anime", icon: List }];
 
 const isNavItemActive = (pathname, href) =>
   href === "/"
@@ -25,7 +22,7 @@ function Navbar() {
       borderColor={{ base: "transparent", md: "border.default" }}
       bg="bg.subtle"
     >
-      <Container maxW="1600px" px={{ base: "5", xl: "10" }}>
+      <Container maxW="1696px" px={{ base: "5", md: "12", xl: "0" }}>
         <Flex
           align="center"
           justify="space-between"

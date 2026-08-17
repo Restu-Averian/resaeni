@@ -67,9 +67,9 @@ function AnimeStreamingPage() {
   return (
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
       <Container
-        maxW="1440px"
-        px={{ base: "4", md: "8", xl: "12" }}
-        py={{ base: "6", md: "7" }}
+        maxW="1696px"
+        px={{ base: "5", md: "12", xl: "0" }}
+        py={{ base: "7", md: "10" }}
       >
         <Stack gap={{ base: "5", md: "6" }}>
           <AnimeStreamingHeader episode={episode} />

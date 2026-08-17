@@ -72,11 +72,18 @@ function AnimeListPage() {
   return (
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
       <Container
-        maxW="1440px"
-        px={{ base: "5", md: "8", xl: "12" }}
-        py={{ base: "7", md: "10" }}
+        maxW="1920px"
+        px="0"
+        py="0"
       >
-        <Stack gap={{ base: "7", md: "8" }}>
+        <Stack
+          gap={{ base: "7", md: "8" }}
+          maxW="1696px"
+          w="full"
+          mx="auto"
+          px={{ base: "5", md: "12", xl: "0" }}
+          py={{ base: "7", md: "10" }}
+        >
           {isMobile && <AnimeListHeader />}
 
           <Stack
