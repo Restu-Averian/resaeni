@@ -1,6 +1,5 @@
 import { Box, Image as ChakraImage } from "@chakra-ui/react";
 import { useState } from "react";
-
 import placeholderPortrait from "../../assets/images/states/placeholder-portrait.png";
 import placeholderLandscape from "../../assets/images/states/placeholder-landscape.png";
 import placeholderSquare from "../../assets/images/states/placeholder-square.png";
@@ -52,6 +51,7 @@ function ResaeniImage({
 
   if (src !== prevSrc) {
     setPrevSrc(src);
+
     setStatus(!src ? "error" : "loading");
   }
 

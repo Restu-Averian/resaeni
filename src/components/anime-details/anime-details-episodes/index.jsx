@@ -1,12 +1,37 @@
 import { Box, Flex, Stack, Text } from "@chakra-ui/react";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router";
 import AnimeDetailsEpisodesItem from "./AnimeDetailsEpisodesItem";
 import AnimeDetailsHeaderSection from "../AnimeDetailsHeaderSection";
+import AnimeDetailsSkeletonEpisodes from "../../skeletons/anime-details/AnimeDetailsSkeletonEpisodes";
+import { ANIME_DETAILS_ITEMS_LIMIT } from "../../../constants/anime-details.constants";
+import { getAnimeDetailsEpisodes } from "../../../services/anime-details";
 
-function AnimeDetailsEpisodes({ malId, episodes, pagination, isError }) {
+function AnimeDetailsEpisodes({ enabled }) {
+  const { mal_id: malId } = useParams();
+
   const scrollerRef = useRef(null);
+
   const [hasOverflow, setHasOverflow] = useState(false);
-  const total = pagination?.total ?? episodes.length;
+
+  const { data, isError, isPending } = useQuery({
+    queryKey: ["anime-details", malId, "episodes"],
+    queryFn: () =>
+      getAnimeDetailsEpisodes(malId, {
+        page: 1,
+        limit: ANIME_DETAILS_ITEMS_LIMIT,
+      }),
+    enabled: malId && enabled,
+  });
+
+  const { episodes, total } = useMemo(() => {
+    const eps = data?.items ?? [];
+    return {
+      episodes: eps,
+      total: data?.pagination?.total ?? eps.length,
+    };
+  }, [data]);
 
   useEffect(() => {
     const checkOverflow = () => {
@@ -32,6 +57,14 @@ function AnimeDetailsEpisodes({ malId, episodes, pagination, isError }) {
       behavior: "smooth",
     });
   };
+
+  if (isPending) {
+    return (
+      <Box as="section" id="anime-details-episodes" scrollMarginTop="96px">
+        <AnimeDetailsSkeletonEpisodes />
+      </Box>
+    );
+  }
 
   return (
     <Box as="section" id="anime-details-episodes" scrollMarginTop="96px">
@@ -64,11 +97,9 @@ function AnimeDetailsEpisodes({ malId, episodes, pagination, isError }) {
             pb="4"
             px="4"
             mx="-4"
+            scrollbarWidth="thin"
             mt="-4"
             scrollSnapType="x proximity"
-            css={{
-              scrollbarWidth: "thin",
-            }}
           >
             {episodes.map((episode) => (
               <AnimeDetailsEpisodesItem

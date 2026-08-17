@@ -17,10 +17,8 @@ import AnimeDetailsOverview from "../components/anime-details/AnimeDetailsOvervi
 import AnimeDetailsSynopsis from "../components/anime-details/AnimeDetailsSynopsis";
 import AnimeDetailsTabs from "../components/anime-details/AnimeDetailsTabs";
 import AnimeDetailsSkeleton from "../components/skeletons/anime-details/AnimeDetailsSkeleton";
-import { ANIME_DETAILS_ITEMS_LIMIT } from "../constants/anime-details.constants";
 import {
   getAnimeDetails,
-  getAnimeDetailsEpisodes,
 } from "../services/anime-details";
 import Seo from "../components/global/Seo";
 
@@ -36,16 +34,6 @@ function AnimeDetailsPage() {
     queryKey: ["anime-details", malId],
     queryFn: () => getAnimeDetails(malId),
     enabled: isValidMalId,
-  });
-
-  const episodesQuery = useQuery({
-    queryKey: ["anime-details", malId, "episodes"],
-    queryFn: () =>
-      getAnimeDetailsEpisodes(malId, {
-        page: 1,
-        limit: ANIME_DETAILS_ITEMS_LIMIT,
-      }),
-    enabled: isValidMalId && detailsQuery.isSuccess,
   });
 
   const jumpToEpisodes = () => {
@@ -106,7 +94,6 @@ function AnimeDetailsPage() {
   }
 
   const anime = detailsQuery.data;
-  const episodes = episodesQuery.data?.items ?? [];
 
   const title = `${anime.title_en || anime.title_romaji || "Aeni"} ${anime.title_native ? `(${anime.title_native})` : ""}`.trim();
   const seoDescription = anime.synopsis
@@ -147,10 +134,7 @@ function AnimeDetailsPage() {
 
               <Box ref={episodesRef}>
                 <AnimeDetailsEpisodes
-                  malId={malId}
-                  episodes={episodes}
-                  pagination={episodesQuery.data?.pagination}
-                  isError={episodesQuery.isError}
+                  enabled={detailsQuery.isSuccess}
                 />
               </Box>
             </Stack>

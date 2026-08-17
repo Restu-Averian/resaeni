@@ -43,7 +43,7 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
 
     const animeResult = await dbClient.execute({
       sql: `
-				SELECT id, title_en, title_romaji
+				SELECT id, title_en, title_romaji, title_native
 				FROM anime_info
 				WHERE id = ?
 				LIMIT 1
@@ -52,7 +52,11 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
     });
 
     const anime = animeResult.rows[0] as unknown as
-      Pick<AnimeDetailsRow, "id" | "title_en" | "title_romaji"> | undefined;
+      | Pick<
+          AnimeDetailsRow,
+          "id" | "title_en" | "title_romaji" | "title_native"
+        >
+      | undefined;
     if (!anime) {
       return c.json(errorResponse("ANIME_NOT_FOUND", "Anime not found"), 404);
     }
@@ -111,6 +115,7 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
     return c.json({
       title_en: anime.title_en,
       title_romaji: anime.title_romaji,
+      title_native: anime.title_native,
       episode_number: Number(episode.episode_number),
       total_episodes: Number(totalResult.rows[0]?.total ?? 0),
       aired_at: episode.aired_at,

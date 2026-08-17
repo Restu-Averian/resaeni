@@ -77,75 +77,76 @@ function AnimeListPage() {
         canonicalPath="/anime"
         robots="index, follow"
       />
+
       <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
-      <Container maxW="1920px" px="0" py="0">
-        <Stack
-          gap={{ base: "7", md: "8" }}
-          maxW="1696px"
-          w="full"
-          mx="auto"
-          px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
-          py={{ base: "7", md: "10" }}
-        >
-          {isMobile && <AnimeListHeader />}
-
+        <Container maxW="1920px" px="0" py="0">
           <Stack
-            position={{ base: "static", lg: "sticky" }}
-            top={{ lg: "72px" }}
-            zIndex="10"
-            bg="bg.canvas"
             gap={{ base: "7", md: "8" }}
-            pb="2"
+            maxW="1696px"
+            w="full"
+            mx="auto"
+            px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
+            py={{ base: "7", md: "10" }}
           >
-            <Flex
-              align={{ base: "stretch", lg: "end" }}
-              justify="space-between"
-              direction={{ base: "column", lg: "row" }}
-              gap="6"
+            {isMobile && <AnimeListHeader />}
+
+            <Stack
+              position={{ base: "static", lg: "sticky" }}
+              top={{ lg: "72px" }}
+              zIndex="10"
+              bg="bg.canvas"
+              gap={{ base: "7", md: "8" }}
+              pb="2"
             >
-              {!isMobile && <AnimeListHeader />}
+              <Flex
+                align={{ base: "stretch", lg: "end" }}
+                justify="space-between"
+                direction={{ base: "column", lg: "row" }}
+                gap="6"
+              >
+                {!isMobile && <AnimeListHeader />}
 
-              <AnimeListSearchInput onSearchChange={handleSearchChange} />
-            </Flex>
+                <AnimeListSearchInput onSearchChange={handleSearchChange} />
+              </Flex>
 
-            <AnimeListFilters
-              filters={filters}
-              onFilterChange={updateFilter}
-              onRemoveFilter={removeFilter}
-              onClearFilters={clearFilters}
-            />
-          </Stack>
-
-          {isError ? (
-            <Center py="20">
-              <Text color="fg.error">
-                {error?.response?.data?.error?.message ||
-                  "Failed to load anime."}
-              </Text>
-            </Center>
-          ) : isLoadingAnimeList ? (
-            <>
-              <AnimeListDatasSkeleton />
-
-              <AnimeListPaginationSkeleton />
-            </>
-          ) : animeData?.items?.length === 0 ? (
-            <Center py="20">
-              <Text color="fg.muted">No anime found.</Text>
-            </Center>
-          ) : (
-            <>
-              <AnimeListDatas anime={animeData?.items ?? []} />
-
-              <AnimeListPagination
-                pagination={animeData?.pagination}
-                onPageChange={setPage}
+              <AnimeListFilters
+                filters={filters}
+                onFilterChange={updateFilter}
+                onRemoveFilter={removeFilter}
+                onClearFilters={clearFilters}
               />
-            </>
-          )}
-        </Stack>
-      </Container>
-    </Box>
+            </Stack>
+
+            {isError ? (
+              <Center py="20">
+                <Text color="fg.error">
+                  {error?.response?.data?.error?.message ||
+                    "Failed to load anime."}
+                </Text>
+              </Center>
+            ) : isLoadingAnimeList ? (
+              <>
+                <AnimeListDatasSkeleton />
+
+                <AnimeListPaginationSkeleton />
+              </>
+            ) : animeData?.items?.length === 0 ? (
+              <Center py="20">
+                <Text color="fg.muted">No anime found.</Text>
+              </Center>
+            ) : (
+              <>
+                <AnimeListDatas anime={animeData?.items ?? []} />
+
+                <AnimeListPagination
+                  pagination={animeData?.pagination}
+                  onPageChange={setPage}
+                />
+              </>
+            )}
+          </Stack>
+        </Container>
+      </Box>
     </>
   );
 }

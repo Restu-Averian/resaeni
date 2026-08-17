@@ -4,6 +4,7 @@ import { Link as RouterLink, useParams } from "react-router";
 
 function AnimeStreamingHeader({ episode }) {
   const { mal_id: malId } = useParams();
+
   return (
     <Stack gap="2">
       <HStack
@@ -23,9 +24,9 @@ function AnimeStreamingHeader({ episode }) {
         <Text as="h1" textStyle="display" color="fg.heading">
           {episode.title_en || episode.title_romaji || "Untitled Anime"}
         </Text>
-        {episode.title_romaji ? (
+        {episode.title_native ? (
           <Text color="accent.warmMuted" fontFamily="heading" fontSize="lg">
-            {episode.title_romaji}
+            {episode.title_native}
           </Text>
         ) : null}
       </HStack>
