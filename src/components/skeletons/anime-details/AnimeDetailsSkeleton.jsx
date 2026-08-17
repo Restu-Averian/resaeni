@@ -3,7 +3,6 @@ import { useState } from "react";
 import AnimeDetailsSkeletonHero from "./AnimeDetailsSkeletonHero";
 import AnimeDetailsSkeletonSynopsis from "./AnimeDetailsSkeletonSynopsis";
 import AnimeDetailsSkeletonOverview from "./AnimeDetailsSkeletonOverview";
-import AnimeDetailsSkeletonEpisodes from "./AnimeDetailsSkeletonEpisodes";
 import AnimeDetailsSkeletonCharacters from "./AnimeDetailsSkeletonCharacters";
 import AnimeDetailsTabs from "../../anime-details/AnimeDetailsTabs";
 
@@ -33,10 +32,6 @@ function AnimeDetailsSkeleton() {
 
                 <AnimeDetailsSkeletonOverview />
               </Grid>
-
-              <Box>
-                <AnimeDetailsSkeletonEpisodes />
-              </Box>
             </Stack>
           }
           charactersContent={<AnimeDetailsSkeletonCharacters />}

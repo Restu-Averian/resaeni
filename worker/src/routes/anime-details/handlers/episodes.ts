@@ -1,5 +1,5 @@
 import { createDatabaseClient } from "../../../db/client";
-import { databaseUnavailable, errorResponse } from "../../../utils/response";
+import { databaseUnavailable, errorResponse, successResponse } from "../../../utils/response";
 import {
   parseMalId,
   parsePagination,
@@ -54,14 +54,16 @@ export const handleAnimeEpisodes = async (c: AnimeDetailsContext) => {
       aired_at: row.aired_at,
     }));
 
-    return c.json({
-      items,
-      pagination: {
-        page,
-        limit,
-        total: Number(countResult.rows[0]?.total ?? 0),
-      },
-    });
+    return c.json(
+      successResponse({
+        items,
+        pagination: {
+          page,
+          limit,
+          total: Number(countResult.rows[0]?.total ?? 0),
+        },
+      }),
+    );
   } catch {
     return databaseUnavailable(c);
   }

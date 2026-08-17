@@ -37,73 +37,77 @@ function HomePage() {
         robots="index, follow"
         image={seoImage}
       />
+
       <Box bg="bg.canvas">
-      <Container maxW="100%" px="0" py="0">
-        <Stack gap={{ base: "8", md: "0" }}>
-          {error && (
-            <Box
-              mx={{ base: "5", md: "24" }}
-              p="4"
-              bg="red.500"
-              color="white"
-              borderRadius="md"
-            >
-              <Text>Failed to load data: {error?.message}</Text>
-            </Box>
-          )}
-
-          {isLoading ? (
-            <HomeSkeleton />
-          ) : (
-            <>
-              {homeData?.featured &&
-                Object.keys(homeData.featured).length > 0 && (
-                  <HomeHeroBanner hero={homeData.featured} />
-                )}
-
-              {homeData?.tonights_picks &&
-                homeData.tonights_picks.length > 0 && (
-                  <HomePicksSection picks={homeData.tonights_picks} />
-                )}
-
-              <Flex
-                align="center"
-                gap="4"
-                mt={{ base: "8", md: "16" }}
-                mb={{ base: "4", md: "8" }}
-                maxW="4xl"
-                mx="auto"
-                w="full"
-                px="6"
+        <Container maxW="100%" px="0" py="0">
+          <Stack gap={{ base: "8", md: "0" }}>
+            {error && (
+              <Box
+                mx={{ base: "5", md: "24" }}
+                p="4"
+                bg="red.500"
+                color="white"
+                borderRadius="md"
               >
-                <Box
-                  flex="1"
-                  h="1px"
-                  bgGradient="linear(to-r, transparent, whiteAlpha.200)"
-                />
-                <Link
-                  as={RouterLink}
-                  to="/anime"
-                  color="accent.primary"
-                  display="flex"
-                  alignItems="center"
-                  gap="2"
-                  fontSize="lg"
-                  _hover={{ textDecoration: "none", color: "accent.secondary" }}
+                <Text>Failed to load data: {error?.message}</Text>
+              </Box>
+            )}
+
+            {isLoading ? (
+              <HomeSkeleton />
+            ) : (
+              <>
+                {homeData?.featured &&
+                  Object.keys(homeData.featured).length > 0 && (
+                    <HomeHeroBanner hero={homeData.featured} />
+                  )}
+
+                {homeData?.tonights_picks &&
+                  homeData.tonights_picks.length > 0 && (
+                    <HomePicksSection picks={homeData.tonights_picks} />
+                  )}
+
+                <Flex
+                  align="center"
+                  gap="4"
+                  mt={{ base: "8", md: "16" }}
+                  mb={{ base: "4", md: "8" }}
+                  maxW="4xl"
+                  mx="auto"
+                  w="full"
+                  px="6"
                 >
-                  Browse all Aeni <Icon as={ArrowRight} boxSize="5" />
-                </Link>
-                <Box
-                  flex="1"
-                  h="1px"
-                  bgGradient="linear(to-l, transparent, whiteAlpha.200)"
-                />
-              </Flex>
-            </>
-          )}
-        </Stack>
-      </Container>
-    </Box>
+                  <Box
+                    flex="1"
+                    h="1px"
+                    bgGradient="linear(to-r, transparent, whiteAlpha.200)"
+                  />
+                  <Link
+                    as={RouterLink}
+                    to="/anime"
+                    color="accent.primary"
+                    display="flex"
+                    alignItems="center"
+                    gap="2"
+                    fontSize="lg"
+                    _hover={{
+                      textDecoration: "none",
+                      color: "accent.secondary",
+                    }}
+                  >
+                    Browse all Aeni <Icon as={ArrowRight} boxSize="5" />
+                  </Link>
+                  <Box
+                    flex="1"
+                    h="1px"
+                    bgGradient="linear(to-l, transparent, whiteAlpha.200)"
+                  />
+                </Flex>
+              </>
+            )}
+          </Stack>
+        </Container>
+      </Box>
     </>
   );
 }

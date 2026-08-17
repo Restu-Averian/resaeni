@@ -7,13 +7,14 @@ export const successResponse = <T>(data: T) => {
   };
 };
 
-export const errorResponse = (code: string, message: string) => {
+export const errorResponse = <T = undefined>(code: string, message: string, data?: T) => {
   return {
     success: false,
     error: {
       code,
       message,
     },
+    ...(data !== undefined ? { data } : {}),
   };
 };
 

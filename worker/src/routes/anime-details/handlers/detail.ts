@@ -1,5 +1,5 @@
 import { createDatabaseClient } from "../../../db/client";
-import { databaseUnavailable, errorResponse } from "../../../utils/response";
+import { databaseUnavailable, errorResponse, successResponse } from "../../../utils/response";
 import { parseAired, parseGenres, parseMalId } from "../utils";
 import type { AnimeDetailsContext, AnimeDetailsRow } from "../types";
 
@@ -54,26 +54,29 @@ export const handleAnimeDetails = async (c: AnimeDetailsContext) => {
     }
 
     const aired = parseAired(row.aired, row.season);
+    const parsedGenres = parseGenres(row.genres);
 
-    return c.json({
-      id: Number(row.id),
-      title_en: row.title_en,
-      title_romaji: row.title_romaji,
-      title_native: row.title_native,
-      type: row.type,
-      status: row.status,
-      episodes_count: Number(episodeCountResult.rows[0]?.total ?? 0),
-      season: row.season,
-      year: aired.year,
-      aired_from: aired.aired_from,
-      aired_to: aired.aired_to,
-      score: row.rating === null ? null : Number(row.rating),
-      studio: row.studio,
-      synopsis: row.description,
-      photo: row.photo,
-      banner_bg_img: row.banner_bg_img,
-      genres: parseGenres(row.genres),
-    });
+    return c.json(
+      successResponse({
+        id: Number(row.id),
+        title_en: row.title_en,
+        title_romaji: row.title_romaji,
+        title_native: row.title_native,
+        type: row.type,
+        status: row.status,
+        episodes_count: Number(episodeCountResult.rows[0]?.total ?? 0),
+        season: row.season,
+        year: aired.year,
+        aired_from: aired.aired_from,
+        aired_to: aired.aired_to,
+        score: row.rating === null ? null : Number(row.rating),
+        studio: row.studio,
+        synopsis: row.description,
+        photo: row.photo,
+        banner_bg_img: row.banner_bg_img,
+        genres: parsedGenres,
+      }),
+    );
   } catch {
     return databaseUnavailable(c);
   }

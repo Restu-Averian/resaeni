@@ -1,5 +1,5 @@
 import { createDatabaseClient } from "../../../db/client";
-import { databaseUnavailable } from "../../../utils/response";
+import { databaseUnavailable, successResponse } from "../../../utils/response";
 import type { AnimeListContext } from "../types";
 
 export const handleOptions = async (c: AnimeListContext) => {
@@ -26,17 +26,24 @@ export const handleOptions = async (c: AnimeListContext) => {
       `),
     ]);
 
-    const genres = [
+    const genreOptions = [
       "Any",
       ...genresResult.rows.map((row) => String(row.genre)),
     ];
 
-    const types = ["Any", ...typesResult.rows.map((row) => String(row.type))];
+    const typeOptions = [
+      "Any",
+      ...typesResult.rows.map((row) => String(row.type)),
+    ];
+    const orderOptions = ["Newest", "Oldest", "A-Z", "Z-A"];
 
-    return c.json({
-      genre: genres,
-      type: types,
-    });
+    return c.json(
+      successResponse({
+        genres: genreOptions,
+        types: typeOptions,
+        orders: orderOptions,
+      }),
+    );
   } catch {
     return databaseUnavailable(c);
   }
