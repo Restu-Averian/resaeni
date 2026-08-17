@@ -8,7 +8,7 @@ export default function Layout() {
 
   return (
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "92px", md: "0" }}>
-      {!isMobile && <Navbar />}
+      <Navbar />
 
       <Outlet />
 

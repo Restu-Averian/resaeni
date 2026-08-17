@@ -1,10 +1,10 @@
 import { Route, Routes } from "react-router";
-import Layout from "./components/global/layout.jsx";
 import AnimeDetailsPage from "./pages/AnimeDetailsPage.jsx";
 import AnimeListPage from "./pages/AnimeListPage.jsx";
 import AnimeStreamingPage from "./pages/AnimeStreamingPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
+import Layout from "./components/global/layout";
 
 export default function App() {
   return (

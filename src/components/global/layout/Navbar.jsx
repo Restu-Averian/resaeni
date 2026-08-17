@@ -23,7 +23,7 @@ function Navbar() {
       >
         <Flex
           align="center"
-          justify="space-between"
+          justify={{ base: "center", md: "space-between" }}
           minH={{ base: "86px", md: "72px" }}
           gap="8"
         >
@@ -42,6 +42,8 @@ function Navbar() {
 
           <HStack as="nav" display={{ base: "none", md: "flex" }} gap="9">
             {NAV_ITEMS.map((item) => {
+              if (item.isMobile) return null;
+
               const isActive = isNavItemActive(pathname, item.href);
 
               return (
