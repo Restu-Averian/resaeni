@@ -134,8 +134,14 @@ export function Select({
         >
           <Drawer.Backdrop />
           <Drawer.Positioner>
-            <Drawer.Content borderTopRadius="xl" maxH="80vh">
-              <Drawer.Body p="4" display="flex" flexDirection="column" gap="4">
+            <Drawer.Content borderTopRadius="xl">
+              <Drawer.Body
+                p="4"
+                pb="100px"
+                display="flex"
+                flexDirection="column"
+                gap="4"
+              >
                 <Box position="relative" flexShrink={0}>
                   <Input
                     placeholder="Search..."
@@ -161,8 +167,8 @@ export function Select({
                 <VStack
                   align="stretch"
                   overflowY="auto"
+                  maxH="35vh"
                   gap="2"
-                  pb="4"
                   flex="1"
                 >
                   {filteredItems.map((item) => (
