@@ -15,6 +15,7 @@ function AnimeDetailsHeroAction({ anime, onJumpToEpisodes }) {
       >
         Watch Episode 1
       </Button>
+
       <Button size="lg" variant="plain" onClick={onJumpToEpisodes}>
         Jump to episodes <ArrowRight size={18} />
       </Button>

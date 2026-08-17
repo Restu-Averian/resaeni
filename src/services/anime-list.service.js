@@ -7,3 +7,9 @@ export async function getAnimeList(params) {
 
   return response.data;
 }
+
+export async function getAnimeListOptions() {
+  const response = await api.get("/api/anime/options");
+
+  return response.data;
+}

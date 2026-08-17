@@ -72,8 +72,8 @@ export function Select({
         showPrefixLabel
           ? "auto auto auto auto"
           : hasPrefixIcon
-            ? "auto minmax(0, 1fr) auto"
-            : "minmax(0, 1fr) auto"
+            ? "auto auto auto"
+            : "auto auto"
       }
       w={triggerWidth}
       alignItems="center"

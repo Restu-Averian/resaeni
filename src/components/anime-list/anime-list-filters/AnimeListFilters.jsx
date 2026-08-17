@@ -1,7 +1,12 @@
 import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import AnimeListFiltersItems from "./AnimeListFiltersItems";
 import { Select } from "../../ui/select";
-import { FILTER_OPTIONS, FILTERS_CONFIG } from "../../../constants/anime-list.constants";
+import {
+  FILTER_OPTIONS,
+  FILTERS_CONFIG,
+} from "../../../constants/anime-list.constants";
+import { getAnimeListOptions } from "../../../services/anime-list.service";
 
 function AnimeListFilters({
   filters,
@@ -9,8 +14,23 @@ function AnimeListFilters({
   onRemoveFilter,
   onClearFilters,
 }) {
-  const visibleFilters = FILTERS_CONFIG.filter((filter) => filter.name !== "order");
+  const visibleFilters = FILTERS_CONFIG.filter(
+    (filter) => filter.name !== "order",
+  );
   const orderFilter = FILTERS_CONFIG.find((filter) => filter.name === "order");
+
+  const { data: optionsData } = useQuery({
+    queryKey: ["anime-list-options"],
+    queryFn: getAnimeListOptions,
+  });
+
+  const mergedOptions = {
+    ...FILTER_OPTIONS,
+    genre: optionsData?.genre?.length
+      ? optionsData.genre
+      : FILTER_OPTIONS.genre,
+    type: optionsData?.type?.length ? optionsData.type : FILTER_OPTIONS.type,
+  };
 
   return (
     <Stack gap="4">
@@ -30,15 +50,17 @@ function AnimeListFilters({
           css={{ scrollbarWidth: "none" }}
         >
           {visibleFilters.map((filter) => (
-            <Box key={filter.name} w={{ base: "150px", md: "190px", lg: "180px" }} flexShrink="0">
+            <Box
+              key={filter.name}
+              flexShrink="0"
+            >
               <Select
                 prefixIcon={filter.icon}
                 prefixLabel={filter.label}
                 name={filter.name}
-                options={FILTER_OPTIONS[filter.name]}
+                options={mergedOptions[filter.name]}
                 value={filters[filter.name]}
                 onChange={onFilterChange}
-                triggerWidth="100%"
                 minH={{ base: "56px", lg: "48px" }}
               />
             </Box>
@@ -53,12 +75,11 @@ function AnimeListFilters({
 
             <Select
               name={orderFilter.name}
-              options={FILTER_OPTIONS[orderFilter.name]}
+              options={mergedOptions[orderFilter.name]}
               value={filters[orderFilter.name]}
               onChange={onFilterChange}
               prefixLabel={orderFilter.label}
               showPrefixLabel={false}
-              triggerWidth={{ base: "126px", md: "156px", lg: "132px" }}
               minH={{ base: "56px", lg: "48px" }}
             />
           </HStack>
