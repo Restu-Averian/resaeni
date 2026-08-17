@@ -34,6 +34,7 @@ function AnimeListDatasItem({ anime }) {
         borderColor="border.default"
         borderRadius="8px"
         boxShadow="media"
+        bg="bg.subtle"
       >
         <Image
           src={anime.photo}

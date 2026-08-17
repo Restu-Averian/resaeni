@@ -9,7 +9,7 @@ function AnimeListDatasItemSkeleton() {
       boxShadow="media"
       borderColor="border.subtle"
       position="relative"
-      aspectRatio={{ base: "1.43", lg: "1.04" }}
+      aspectRatio={{ base: "1.43", lg: "1.35" }}
     >
       <Skeleton w="full" h="full" />
 

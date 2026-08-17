@@ -22,7 +22,10 @@ function Navbar() {
       borderColor={{ base: "transparent", md: "border.default" }}
       bg="bg.subtle"
     >
-      <Container maxW="1696px" px={{ base: "5", md: "12", xl: "0" }}>
+      <Container
+        maxW="1696px"
+        px={{ base: "5", md: "12", xl: "clamp(3rem, 4vw, 7rem)" }}
+      >
         <Flex
           align="center"
           justify="space-between"

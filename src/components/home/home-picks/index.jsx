@@ -13,7 +13,7 @@ function HomePicksSection({ picks }) {
       position="relative"
       zIndex="1"
       mt={{ base: "0", md: "-8" }}
-      px={{ base: "5", md: "12", xl: "0" }}
+      px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
     >
       <HomeSectionHeader title="Resaeni Picks" />
 

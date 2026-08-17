@@ -20,7 +20,7 @@ function AnimeDetailsHero({ anime, onJumpToEpisodes }) {
       <Flex
         maxW="1696px"
         mx="auto"
-        px={{ base: "5", md: "12", xl: "0" }}
+        px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
         pt={{ base: "8", md: "12", lg: "16" }}
         pb={{ base: "10", md: "14", lg: "16" }}
         gap={{ base: "7", md: "10", xl: "14" }}

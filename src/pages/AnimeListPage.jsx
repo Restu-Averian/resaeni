@@ -81,7 +81,7 @@ function AnimeListPage() {
           maxW="1696px"
           w="full"
           mx="auto"
-          px={{ base: "5", md: "12", xl: "0" }}
+          px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
           py={{ base: "7", md: "10" }}
         >
           {isMobile && <AnimeListHeader />}

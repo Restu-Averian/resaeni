@@ -15,7 +15,7 @@ function HomeHeroBannerSkeleton() {
         minH={{ base: "620px", md: "560px" }}
         maxW="1696px"
         mx="auto"
-        px={{ base: "5", md: "12", xl: "0" }}
+        px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
         pt={{ base: "80px", md: "24" }}
         pb={{ base: "12", md: "16" }}
       >

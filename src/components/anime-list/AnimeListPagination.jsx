@@ -28,7 +28,8 @@ function AnimeListPagination({ pagination, onPageChange }) {
     return { start, end, pages, page, total, total_pages };
   }, [pagination]);
 
-  if (!pagination || pagination.total === 0) return null;
+  if (!pagination || pagination.total === 0 || pagination.total_pages <= 1)
+    return null;
 
   return (
     <Flex

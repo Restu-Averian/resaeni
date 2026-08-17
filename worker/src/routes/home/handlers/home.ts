@@ -1,7 +1,6 @@
 import { createDatabaseClient } from "../../../db/client";
 import { errorResponse, successResponse } from "../../../utils/response";
 import { loadFeatured } from "../loaders/featured";
-import { loadGenres } from "../loaders/genres";
 import { loadTonightsPicks } from "../loaders/tonights-picks";
 import type { HomeContext } from "../types";
 
@@ -21,24 +20,22 @@ export const handleHome = async (c: HomeContext) => {
   try {
     const dbClient = createDatabaseClient(c.env);
 
-    const [featuredResult, tonightsPicksResult, genresResult] =
+    const [featuredResult, tonightsPicksResult] =
       await Promise.allSettled([
         loadFeatured(dbClient),
         loadTonightsPicks(dbClient),
-        loadGenres(dbClient),
       ]);
 
     const failedQueryCount = [
       featuredResult,
       tonightsPicksResult,
-      genresResult,
     ].filter((result) => result.status === "rejected").length;
 
     /*
      * Kalau seluruh bagian gagal, response kosong akan menyesatkan.
      * Lebih baik anggap database benar-benar unavailable.
      */
-    if (failedQueryCount === 3) {
+    if (failedQueryCount === 2) {
       console.error("All home database queries failed.");
 
       return c.json(
@@ -50,14 +47,13 @@ export const handleHome = async (c: HomeContext) => {
       );
     }
 
-    const { featured, tonightsPicks, genres } = {
+    const { featured, tonightsPicks } = {
       featured:
         featuredResult.status === "fulfilled" ? featuredResult.value : {},
       tonightsPicks:
         tonightsPicksResult.status === "fulfilled"
           ? tonightsPicksResult.value
           : [],
-      genres: genresResult.status === "fulfilled" ? genresResult.value : [],
     };
 
     if (featuredResult.status === "rejected") {
@@ -66,10 +62,6 @@ export const handleHome = async (c: HomeContext) => {
 
     if (tonightsPicksResult.status === "rejected") {
       console.error("Home query failed: tonights_picks");
-    }
-
-    if (genresResult.status === "rejected") {
-      console.error("Home query failed: genres");
     }
 
     /*
@@ -84,7 +76,6 @@ export const handleHome = async (c: HomeContext) => {
       successResponse({
         featured,
         tonights_picks: tonightsPicks,
-        genres,
       }),
       200,
     );

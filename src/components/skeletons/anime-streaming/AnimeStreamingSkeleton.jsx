@@ -12,7 +12,7 @@ function AnimeStreamingSkeleton() {
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
       <Container
         maxW="1696px"
-        px={{ base: "5", md: "12", xl: "0" }}
+        px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
         py={{ base: "7", md: "10" }}
       >
         <Stack gap="6">
