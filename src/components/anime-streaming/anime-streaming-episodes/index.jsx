@@ -6,7 +6,7 @@ import {
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { ANIME_STREAMING_EPISODES_LIMIT } from "../../../constants/anime-streaming";
+import { ANIME_STREAMING_EPISODES_LIMIT } from "../../../constants/anime-streaming.constants";
 import { getAnimeDetailsEpisodes } from "../../../services/anime-details";
 import AnimeStreamingEpisodesItem from "./AnimeStreamingEpisodesItem";
 

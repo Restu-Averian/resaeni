@@ -1,7 +1,7 @@
 import { Box, Flex, HStack, Stack, Text } from "@chakra-ui/react";
 import AnimeListFiltersItems from "./AnimeListFiltersItems";
 import { Select } from "../../ui/select";
-import { FILTER_OPTIONS, FILTERS_CONFIG } from "../../../constants/anime-list";
+import { FILTER_OPTIONS, FILTERS_CONFIG } from "../../../constants/anime-list.constants";
 
 function AnimeListFilters({
   filters,

@@ -1,5 +1,5 @@
 import { Center } from "@chakra-ui/react";
-import { BASE_VIDEO_URL } from "../../constants/anime-streaming";
+import { BASE_VIDEO_URL } from "../../constants/anime-streaming.constants";
 
 function AnimeStreamingPlayer({ selectedEmbedUrl, poster }) {
   return (

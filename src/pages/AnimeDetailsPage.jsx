@@ -17,7 +17,7 @@ import AnimeDetailsOverview from "../components/anime-details/AnimeDetailsOvervi
 import AnimeDetailsSynopsis from "../components/anime-details/AnimeDetailsSynopsis";
 import AnimeDetailsTabs from "../components/anime-details/AnimeDetailsTabs";
 import AnimeDetailsSkeleton from "../components/skeletons/anime-details/AnimeDetailsSkeleton";
-import { ANIME_DETAILS_ITEMS_LIMIT } from "../constants/anime-details";
+import { ANIME_DETAILS_ITEMS_LIMIT } from "../constants/anime-details.constants";
 import {
   getAnimeDetails,
   getAnimeDetailsEpisodes,

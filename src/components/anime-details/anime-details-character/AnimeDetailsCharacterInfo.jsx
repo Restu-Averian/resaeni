@@ -1,5 +1,5 @@
 import { Badge, Stack, Text } from "@chakra-ui/react";
-import { ANIME_DETAILS_ROLE_LABELS } from "../../../constants/anime-details";
+import { ANIME_DETAILS_ROLE_LABELS } from "../../../constants/anime-details.constants";
 
 function AnimeDetailsCharacterInfo({ character, isCompact, isSelected }) {
   const roleLabel =

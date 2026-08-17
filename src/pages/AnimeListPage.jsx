@@ -21,7 +21,7 @@ import {
   DEFAULT_FILTERS,
   ORDER_VALUE_MAP,
   LIMIT,
-} from "../constants/anime-list";
+} from "../constants/anime-list.constants";
 import { getAnimeList } from "../services/anime-list.service";
 
 function AnimeListPage() {

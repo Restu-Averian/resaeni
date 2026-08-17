@@ -1,7 +1,7 @@
 import { Box, Grid, Stack, Text, useBreakpointValue } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
-import { ANIME_DETAILS_ITEMS_LIMIT } from "../../../constants/anime-details";
+import { ANIME_DETAILS_ITEMS_LIMIT } from "../../../constants/anime-details.constants";
 import { getAnimeDetailsCharacters } from "../../../services/anime-details";
 import AnimeDetailsCharactersList from "./AnimeDetailsCharactersList";
 import AnimeDetailsVoiceActorsPanel from "./AnimeDetailsVoiceActorsPanel";

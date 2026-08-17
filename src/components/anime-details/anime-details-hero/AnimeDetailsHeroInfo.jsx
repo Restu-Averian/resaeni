@@ -3,7 +3,7 @@ import { Star } from "lucide-react";
 import {
   ANIME_DETAILS_STATUS_LABELS,
   ANIME_DETAILS_TYPE_LABELS,
-} from "../../../constants/anime-details";
+} from "../../../constants/anime-details.constants";
 
 function AnimeDetailsHeroInfo({ anime }) {
   const typeLabel = ANIME_DETAILS_TYPE_LABELS[anime.type] ?? anime.type ?? "—";

@@ -1,13 +1,8 @@
 import { Box, Container, Flex, HStack, Link, Text } from "@chakra-ui/react";
-import { List } from "lucide-react";
-import { Link as RouterLink, Outlet, useLocation } from "react-router";
-
-const navItems = [{ label: "Library", href: "/anime", icon: List }];
-
-const isNavItemActive = (pathname, href) =>
-  href === "/"
-    ? pathname === "/"
-    : pathname === href || pathname.startsWith(`${href}/`);
+import { NAV_ITEMS } from "../../../constants/navbar.constants";
+import { isNavItemActive } from "../../../helpers/navbar.utils";
+import { Link as RouterLink } from "react-router";
+import { useLocation } from "react-router";
 
 function Navbar() {
   const { pathname } = useLocation();
@@ -46,7 +41,7 @@ function Navbar() {
           </Text>
 
           <HStack as="nav" display={{ base: "none", md: "flex" }} gap="9">
-            {navItems.map((item) => {
+            {NAV_ITEMS.map((item) => {
               const isActive = isNavItemActive(pathname, item.href);
 
               return (
@@ -82,65 +77,4 @@ function Navbar() {
   );
 }
 
-function MenuItemMobile() {
-  const { pathname } = useLocation();
-
-  return (
-    <Flex
-      as="nav"
-      display={{ base: "grid", md: "none" }}
-      gridTemplateColumns="repeat(2, 1fr)"
-      position="fixed"
-      zIndex="sticky"
-      left="4"
-      right="4"
-      bottom="3"
-      h="78px"
-      overflow="hidden"
-      border="1px solid"
-      borderColor="border.default"
-      borderRadius="panel"
-      bg="rgba(4, 24, 41, 0.94)"
-      boxShadow="panel"
-      backdropFilter="blur(12px)"
-    >
-      {navItems.map((item) => {
-        const Icon = item.icon;
-        const isActive = isNavItemActive(pathname, item.href);
-
-        return (
-          <Link
-            key={item.label}
-            as={RouterLink}
-            to={item.href}
-            display="flex"
-            flexDirection="column"
-            alignItems="center"
-            justifyContent="center"
-            gap="1"
-            color={isActive ? "accent.primary" : "fg.heading"}
-            bg={isActive ? "accent.subtle" : "transparent"}
-            fontFamily="heading"
-            fontSize="md"
-            lineHeight="1"
-            textDecoration="none"
-            _hover={{ color: "accent.hover", textDecoration: "none" }}
-          >
-            <Icon size={25} strokeWidth={1.6} />
-            <Text as="span">{item.label}</Text>
-          </Link>
-        );
-      })}
-    </Flex>
-  );
-}
-
-export default function Layout() {
-  return (
-    <Box minH="100vh" bg="bg.canvas" pb={{ base: "92px", md: "0" }}>
-      <Navbar />
-      <Outlet />
-      <MenuItemMobile />
-    </Box>
-  );
-}
+export default Navbar;

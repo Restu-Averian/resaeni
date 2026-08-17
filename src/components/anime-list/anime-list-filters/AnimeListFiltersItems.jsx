@@ -1,6 +1,6 @@
 import { Button, HStack, Text } from "@chakra-ui/react";
 import { X } from "lucide-react";
-import { CHIP_FILTERS } from "../../../constants/anime-list";
+import { CHIP_FILTERS } from "../../../constants/anime-list.constants";
 
 function AnimeListFiltersItems({ filters, onRemove, onClear }) {
   const activeFilters = CHIP_FILTERS.filter((key) => filters[key] !== "Any");

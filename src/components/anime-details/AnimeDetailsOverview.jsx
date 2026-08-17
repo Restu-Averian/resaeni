@@ -3,7 +3,7 @@ import AnimeDetailsHeaderSection from "./AnimeDetailsHeaderSection";
 import {
   ANIME_DETAILS_STATUS_LABELS,
   ANIME_DETAILS_TYPE_LABELS,
-} from "../../constants/anime-details";
+} from "../../constants/anime-details.constants";
 import { formatDate } from "../../lib/formatDate";
 
 function AnimeDetailsOverview({ anime }) {
