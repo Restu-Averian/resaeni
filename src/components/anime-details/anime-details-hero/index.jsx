@@ -1,5 +1,5 @@
 import { Box, Flex, Stack } from "@chakra-ui/react";
-import placeholderLandscape from "../../../assets/images/states/placeholder-landscape.png";
+import placeholderLandscape from "../../../assets/images/states/placeholder-landscape.webp";
 import AnimeDetailsHeroPhoto from "./AnimeDetailsHeroPhoto";
 import AnimeDetailsHeroInfo from "./AnimeDetailsHeroInfo";
 import AnimeDetailsHeroGenre from "./AnimeDetailsHeroGenre";

@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef } from "react";
 import { useParams } from "react-router";
 import AnimeStreamingEpisodeNavigation from "../components/anime-streaming/anime-streaming-eps-navigation";
 import AnimeStreamingEpisodes from "../components/anime-streaming/anime-streaming-episodes";
-import imageErrorLandscape from "../assets/images/states/image-error-landscape.png";
+import imageErrorLandscape from "../assets/images/states/image-error-landscape.webp";
 import AnimeStreamingHeader from "../components/anime-streaming/AnimeStreamingHeader";
 import AnimeStreamingPlayer from "../components/anime-streaming/AnimeStreamingPlayer";
 import AnimeStreamingSkeletonHeader from "../components/skeletons/anime-streaming/AnimeStreamingSkeletonHeader";

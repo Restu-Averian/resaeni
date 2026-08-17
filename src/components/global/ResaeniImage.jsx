@@ -1,11 +1,11 @@
 import { Box, Image as ChakraImage } from "@chakra-ui/react";
 import { useState } from "react";
-import placeholderPortrait from "../../assets/images/states/placeholder-portrait.png";
-import placeholderLandscape from "../../assets/images/states/placeholder-landscape.png";
-import placeholderSquare from "../../assets/images/states/placeholder-square.png";
-import imageErrorPortrait from "../../assets/images/states/image-error-portrait.png";
-import imageErrorLandscape from "../../assets/images/states/image-error-landscape.png";
-import imageErrorSquare from "../../assets/images/states/image-error-square.png";
+import placeholderPortrait from "../../assets/images/states/placeholder-portrait.webp";
+import placeholderLandscape from "../../assets/images/states/placeholder-landscape.webp";
+import placeholderSquare from "../../assets/images/states/placeholder-square.webp";
+import imageErrorPortrait from "../../assets/images/states/image-error-portrait.webp";
+import imageErrorLandscape from "../../assets/images/states/image-error-landscape.webp";
+import imageErrorSquare from "../../assets/images/states/image-error-square.webp";
 
 const imageStateAssets = {
   portrait: {
