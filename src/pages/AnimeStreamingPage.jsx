@@ -4,9 +4,8 @@ import { useMemo } from "react";
 import { useParams } from "react-router";
 import AnimeStreamingEpisodeNavigation from "../components/anime-streaming/anime-streaming-eps-navigation";
 import AnimeStreamingEpisodes from "../components/anime-streaming/anime-streaming-episodes";
-import AnimeStreamingError from "../components/anime-streaming/AnimeStreamingError";
+import imageErrorLandscape from "../assets/images/states/image-error-landscape.png";
 import AnimeStreamingHeader from "../components/anime-streaming/AnimeStreamingHeader";
-import AnimeStreamingNotFound from "../components/anime-streaming/AnimeStreamingNotFound";
 import AnimeStreamingPlayer from "../components/anime-streaming/AnimeStreamingPlayer";
 import AnimeStreamingSkeletonHeader from "../components/skeletons/anime-streaming/AnimeStreamingSkeletonHeader";
 import AnimeStreamingSkeletonPlayer from "../components/skeletons/anime-streaming/AnimeStreamingSkeletonPlayer";
@@ -17,32 +16,15 @@ import Seo from "../components/global/Seo";
 function AnimeStreamingPage() {
   const { mal_id: malId, episode_number: episodeNumberParam } = useParams();
 
-  const { currentEpisodeNumber, isValidMalId, isValidEpisodeNumber } =
-    useMemo(() => {
-      const currentEpisodeNumber = Number(episodeNumberParam);
-
-      const isValidMalId = /^\d+$/.test(malId ?? "") && Number(malId) > 0;
-
-      const isValidEpisodeNumber =
-        /^\d+$/.test(episodeNumberParam ?? "") &&
-        Number.isSafeInteger(currentEpisodeNumber) &&
-        currentEpisodeNumber > 0;
-
-      return {
-        currentEpisodeNumber,
-        isValidMalId,
-        isValidEpisodeNumber,
-      };
-    }, [malId, episodeNumberParam]);
+  const currentEpisodeNumber = Number(episodeNumberParam);
 
   const episodeQuery = useQuery({
     queryKey: ["anime-streaming", malId, episodeNumberParam],
     queryFn: () => getAnimeStreamingEpisode(malId, episodeNumberParam),
-    enabled: isValidMalId && isValidEpisodeNumber,
   });
 
   const { episode, currentEpisode, selectedEmbedUrl } = useMemo(() => {
-    const episode = episodeQuery.data;
+    const episode = episodeQuery.data || episodeQuery.error?.response?.data;
 
     const links = episode?.links ?? [];
 
@@ -53,27 +35,7 @@ function AnimeStreamingPage() {
       currentEpisode: episode,
       selectedEmbedUrl,
     };
-  }, [episodeQuery.data]);
-
-  if (!isValidMalId || !isValidEpisodeNumber) {
-    return (
-      <>
-        <Seo title="Invalid Episode | Resaeni" robots="noindex, nofollow" />
-
-        <AnimeStreamingNotFound />
-      </>
-    );
-  }
-
-  if (episodeQuery.isError) {
-    return (
-      <>
-        <Seo title="Error | Resaeni" robots="noindex, nofollow" />
-
-        <AnimeStreamingError error={episodeQuery.error} />
-      </>
-    );
-  }
+  }, [episodeQuery.data, episodeQuery.error]);
 
   const title = currentEpisode?.title || `Episode ${currentEpisodeNumber}`;
 
@@ -96,8 +58,16 @@ function AnimeStreamingPage() {
             {episodeQuery.isPending ? (
               <>
                 <AnimeStreamingSkeletonHeader />
+
                 <AnimeStreamingSkeletonPlayer />
+
                 <AnimeStreamingSkeletonEpisodeNavigation />
+              </>
+            ) : episodeQuery.isError ? (
+              <>
+                <AnimeStreamingHeader episode={episode} isError />
+
+                <AnimeStreamingPlayer poster={imageErrorLandscape} />
               </>
             ) : (
               <>

@@ -24,15 +24,7 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
 
   const episodeNumber = parseEpisodeNumber(c.req.param("episode_number"));
 
-  if (!episodeNumber) {
-    return c.json(
-      errorResponse(
-        "INVALID_EPISODE_NUMBER",
-        "Episode number must be a positive number",
-      ),
-      400,
-    );
-  }
+
 
   if (!c.env.TURSO_DATABASE_URL || !c.env.TURSO_AUTH_TOKEN) {
     return databaseUnavailable(c);
@@ -61,6 +53,21 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
       return c.json(errorResponse("ANIME_NOT_FOUND", "Anime not found"), 404);
     }
 
+    if (!episodeNumber) {
+      return c.json(
+        {
+          ...errorResponse(
+            "INVALID_EPISODE_NUMBER",
+            "Episode number must be a positive number",
+          ),
+          title_en: anime.title_en,
+          title_romaji: anime.title_romaji,
+          title_native: anime.title_native,
+        },
+        400,
+      );
+    }
+
     const episodeResult = await dbClient.execute({
       sql: `
 				SELECT e.id, e.episode_number, e.thumbnail_url, e.aired_at
@@ -73,9 +80,15 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
     });
 
     const episode = episodeResult.rows[0] as unknown as EpisodeRow | undefined;
+
     if (!episode) {
       return c.json(
-        errorResponse("EPISODE_NOT_FOUND", "Episode not found"),
+        {
+          ...errorResponse("EPISODE_NOT_FOUND", "Episode not found"),
+          title_en: anime.title_en,
+          title_romaji: anime.title_romaji,
+          title_native: anime.title_native,
+        },
         404,
       );
     }

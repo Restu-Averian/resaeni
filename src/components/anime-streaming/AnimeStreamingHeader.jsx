@@ -2,7 +2,7 @@ import { HStack, Stack, Text } from "@chakra-ui/react";
 import { ArrowLeft } from "lucide-react";
 import { Link as RouterLink, useParams } from "react-router";
 
-function AnimeStreamingHeader({ episode }) {
+function AnimeStreamingHeader({ episode, isError }) {
   const { mal_id: malId } = useParams();
 
   return (
@@ -22,18 +22,21 @@ function AnimeStreamingHeader({ episode }) {
 
       <HStack align="baseline" gap="4" wrap="wrap">
         <Text as="h1" textStyle="display" color="fg.heading">
-          {episode.title_en || episode.title_romaji || "Untitled Anime"}
+          {episode?.title_en || episode?.title_romaji || "Untitled Anime"}
         </Text>
-        {episode.title_native ? (
+
+        {episode?.title_native ? (
           <Text color="accent.warmMuted" fontFamily="heading" fontSize="lg">
-            {episode.title_native}
+            {episode?.title_native}
           </Text>
         ) : null}
       </HStack>
 
-      <Text color="fg.heading" fontFamily="heading" fontSize="lg">
-        Episode {episode.episode_number} of {episode.total_episodes}
-      </Text>
+      {!isError && (
+        <Text color="fg.heading" fontFamily="heading" fontSize="lg">
+          Episode {episode?.episode_number} of {episode?.total_episodes}
+        </Text>
+      )}
     </Stack>
   );
 }
