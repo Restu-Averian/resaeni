@@ -5,7 +5,7 @@ import AnimeStreamingEpsNavigationMain from "./AnimeStreamingEpsNavigationMain";
 function AnimeStreamingEpisodeNavigation({ episode }) {
   return (
     <Grid
-      templateColumns={{ base: "1fr", md: "1fr 1fr 1fr" }}
+      templateColumns={{ base: "1fr auto 1fr", md: "1fr 1fr 1fr" }}
       alignItems="center"
       gap={{ base: "4", md: "6" }}
       py={{ base: "4", md: "5" }}

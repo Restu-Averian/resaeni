@@ -11,16 +11,14 @@ function AnimeStreamingEpsNavigationEpsNum({ episode, direction }) {
 
   if (!episodeNumber) {
     return (
-      <HStack justify={{ base: "center", md: isPrevious ? "start" : "end" }}>
+      <HStack justify="center">
         <Box />
       </HStack>
     );
   }
 
-  const align = isPrevious ? "start" : "end";
-
   return (
-    <HStack justify={{ base: "center", md: align }}>
+    <HStack justify="center">
       <HStack
         as={RouterLink}
         to={`/anime/${malId}/episode/${episodeNumber}`}
@@ -29,9 +27,15 @@ function AnimeStreamingEpsNavigationEpsNum({ episode, direction }) {
         _hover={{ color: "accent.primary" }}
       >
         {isPrevious && <ArrowLeft size={18} />}
-        <Text fontFamily="heading" fontSize="xl">
+
+        <Text
+          fontFamily="heading"
+          fontSize="xl"
+          display={{ base: "none", md: "block" }}
+        >
           Episode {episodeNumber}
         </Text>
+
         {!isPrevious && <ArrowRight size={18} />}
       </HStack>
     </HStack>
