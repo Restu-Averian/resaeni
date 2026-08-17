@@ -1,11 +1,13 @@
-export function successResponse(data: unknown) {
+import type { Context } from "hono";
+
+export const successResponse = <T>(data: T) => {
   return {
     success: true,
     data,
   };
-}
+};
 
-export function errorResponse(code: string, message: string) {
+export const errorResponse = (code: string, message: string) => {
   return {
     success: false,
     error: {
@@ -13,4 +15,15 @@ export function errorResponse(code: string, message: string) {
       message,
     },
   };
-}
+};
+
+export const databaseUnavailable = (c: Context) => {
+  console.error("Anime details database unavailable.");
+  return c.json(
+    errorResponse(
+      "DATABASE_UNAVAILABLE",
+      "Database is temporarily unavailable",
+    ),
+    503,
+  );
+};

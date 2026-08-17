@@ -1,3 +1,5 @@
-export type Bindings = {
-  // future Cloudflare bindings
-};
+export interface Bindings {
+  TURSO_DATABASE_URL: string;
+  TURSO_AUTH_TOKEN: string;
+  TRACE_MOE_API_KEY?: string;
+}

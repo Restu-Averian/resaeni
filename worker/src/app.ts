@@ -1,40 +1,46 @@
 import { Hono } from "hono";
 import { cors } from "hono/cors";
-
+import { Bindings } from "./types/bindings";
+import { errorResponse } from "./utils/response";
 import health from "./routes/health";
-import ready from "./routes/ready";
-import type { Bindings } from "./types/bindings";
-import { errorResponse, successResponse } from "./utils/response";
-
-const allowedOrigins = new Set(["http://localhost:5173"]);
+import homeRouter from "./routes/home";
+import animeListRouter from "./routes/anime-list";
+import animeDetailsRouter from "./routes/anime-details";
 
 const app = new Hono<{ Bindings: Bindings }>();
 
 app.use(
   "*",
   cors({
-    origin: (origin) => (allowedOrigins.has(origin) ? origin : null),
+    origin: [
+      "http://localhost:5173",
+      "http://127.0.0.1:5173",
+      "http://localhost:5174",
+      "http://127.0.0.1:5174",
+      "https://resnime.my.id",
+      "https://www.resnime.my.id",
+    ],
+    allowMethods: ["GET", "POST", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+    maxAge: 86400,
+    credentials: false,
   }),
 );
 
-app.get("/", (c) =>
-  c.json(
-    successResponse({
-      service: "resaeni-api",
-      status: "running",
-    }),
-  ),
-);
-
 app.route("/health", health);
-app.route("/ready", ready);
 
-app.notFound((c) => c.json(errorResponse("NOT_FOUND", "Route not found"), 404));
+app.route("/api/home", homeRouter);
+app.route("/api/anime", animeListRouter);
+app.route("/api/anime/:mal_id", animeDetailsRouter);
 
-app.onError((error, c) => {
-  console.error(error);
+app.notFound((c) => {
+  return c.json(errorResponse("NOT_FOUND", "Route not found"), 404);
+});
+
+app.onError((err, c) => {
+  console.error(err);
   return c.json(
-    errorResponse("INTERNAL_SERVER_ERROR", "Internal server error"),
+    errorResponse("INTERNAL_SERVER_ERROR", "An unexpected error occurred"),
     500,
   );
 });
