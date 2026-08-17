@@ -28,15 +28,15 @@ function AnimeDetailsHeroInfo({ anime }) {
           {anime.title_en || anime.title_romaji}
         </Text>
 
+        <Text color="fg.muted" fontSize={{ base: "md", md: "lg" }}>
+          {anime.title_native}
+        </Text>
+
         {anime.title_romaji && anime.title_romaji !== anime.title_en && (
           <Text color="fg.muted" fontSize={{ base: "md", md: "lg" }}>
             {anime.title_romaji}
           </Text>
         )}
-
-        <Text color="fg.muted" fontSize={{ base: "md", md: "lg" }}>
-          {anime.title_romaji}
-        </Text>
       </Stack>
 
       <HStack
