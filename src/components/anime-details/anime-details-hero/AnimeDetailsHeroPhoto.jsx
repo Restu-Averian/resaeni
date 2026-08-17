@@ -1,5 +1,5 @@
-import { Box, Image } from "@chakra-ui/react";
-import placeholderImage from "../../../assets/placeholder.png";
+import { Box } from "@chakra-ui/react";
+import ResaeniImage from "../../global/ResaeniImage";
 
 function AnimeDetailsHeroPhoto({ anime }) {
   return (
@@ -15,9 +15,10 @@ function AnimeDetailsHeroPhoto({ anime }) {
       boxShadow="elevated"
       bg="bg.panel"
     >
-      <Image
-        src={anime.photo || placeholderImage}
+      <ResaeniImage
+        src={anime.photo}
         alt={anime.title_en || anime.title_romaji || "Aeni poster"}
+        variant="portrait"
         loading="eager"
         fetchPriority="high"
         w="full"

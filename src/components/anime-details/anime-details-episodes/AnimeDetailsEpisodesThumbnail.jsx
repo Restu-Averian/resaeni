@@ -1,4 +1,5 @@
-import { Box, Image } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
+import ResaeniImage from "../../global/ResaeniImage";
 
 function AnimeDetailsEpisodesThumbnail({ episode }) {
   const episodeNumber = Number(episode.episode_number);
@@ -7,9 +8,10 @@ function AnimeDetailsEpisodesThumbnail({ episode }) {
   return (
     <Box aspectRatio="16 / 9" overflow="hidden" bg="bg.subtle">
       {episode.thumbnail_url ? (
-        <Image
+        <ResaeniImage
           src={episode.thumbnail_url}
           alt={`Episode ${episodeNumber}`}
+          variant="landscape"
           loading="lazy"
           decoding="async"
           w="full"

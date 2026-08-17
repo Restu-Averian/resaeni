@@ -1,4 +1,5 @@
-import { Box, Flex, HStack, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, HStack, Text } from "@chakra-ui/react";
+import ResaeniImage from "../../global/ResaeniImage";
 import { Link as RouterLink } from "react-router";
 
 function AnimeListDatasItem({ anime }) {
@@ -36,9 +37,10 @@ function AnimeListDatasItem({ anime }) {
         boxShadow="media"
         bg="bg.subtle"
       >
-        <Image
+        <ResaeniImage
           src={anime.photo}
           alt={anime.title_en || anime.title_romaji || "Aeni poster"}
+          variant="portrait"
           loading="lazy"
           decoding="async"
           w="full"

@@ -6,11 +6,11 @@ import {
   Flex,
   HStack,
   IconButton,
-  Image,
   Portal,
   Stack,
   Text,
 } from "@chakra-ui/react";
+import ResaeniImage from "../../global/ResaeniImage";
 import { Globe2, X } from "lucide-react";
 
 function VoiceActorsContent({ character, onClose }) {
@@ -36,9 +36,10 @@ function VoiceActorsContent({ character, onClose }) {
 
       <HStack gap="4" align="center">
         {character.photo ? (
-          <Image
+          <ResaeniImage
             src={character.photo}
             alt={character.name}
+            variant="square"
             boxSize={{ base: "72px", md: "84px" }}
             borderRadius="full"
             objectFit="cover"
@@ -106,9 +107,10 @@ function VoiceActorsContent({ character, onClose }) {
             >
               <HStack gap="4" minW="0">
                 {voiceActor.photo ? (
-                  <Image
+                  <ResaeniImage
                     src={voiceActor.photo}
                     alt={voiceActor.name}
+                    variant="square"
                     boxSize="56px"
                     borderRadius="full"
                     objectFit="cover"
