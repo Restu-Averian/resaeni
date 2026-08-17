@@ -26,15 +26,8 @@ function HomePage() {
   });
 
   return (
-    <Box
-      minH="100vh"
-      bg="bg.canvas"
-      maxW="1920px"
-      mx="auto"
-      overflow="hidden"
-      pb={{ base: "28", md: "12" }}
-    >
-      <Container maxW="1920px" px="0" py="0">
+    <Box bg="bg.canvas">
+      <Container maxW="100%" px="0" py="0">
         <Stack gap={{ base: "8", md: "0" }}>
           {error && (
             <Box

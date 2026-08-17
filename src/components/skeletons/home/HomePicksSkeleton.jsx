@@ -1,16 +1,9 @@
-import {
-  Box,
-  Flex,
-  HStack,
-  SimpleGrid,
-  Skeleton,
-  Stack,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, HStack, Stack } from "@chakra-ui/react";
 import HomeSectionHeader from "../../home/HomeSectionHeader";
+import AnimeListDatasItemSkeleton from "../anime-list/AnimeListDatasItemSkeleton";
 
 function HomePicksSkeleton() {
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const skeletons = Array.from({ length: 3 }, (_, i) => i);
 
   return (
     <Stack
@@ -26,42 +19,19 @@ function HomePicksSkeleton() {
     >
       <HomeSectionHeader title="Resaeni Picks" />
 
-      {isMobile ? (
-        <HStack gap="4" overflowX="hidden" pb="2">
-          {[1, 2].map((i) => (
-            <Flex key={i} direction="column" w="260px" align="stretch">
-              <Box
-                aspectRatio="1.55"
-                w="100%"
-                overflow="hidden"
-                borderRadius="8px"
-              >
-                <Skeleton w="100%" h="100%" />
-              </Box>
-              <Flex direction="column" gap="2" pt="2" flex="1">
-                <Skeleton h="22px" w="100%" borderRadius="sm" />
-                <Skeleton h="16px" w="70%" borderRadius="sm" />
-                <Skeleton h="14px" w="42%" borderRadius="sm" />
-              </Flex>
-            </Flex>
+      <Box overflowX="hidden" pb={{ base: "2", md: "4" }}>
+        <HStack align="stretch" gap={{ base: "3", md: "4", xl: "5" }}>
+          {skeletons.map((i) => (
+            <Box
+              key={i}
+              w={{ base: "140px", md: "180px", lg: "220px", xl: "260px" }}
+              flexShrink={0}
+            >
+              <AnimeListDatasItemSkeleton />
+            </Box>
           ))}
         </HStack>
-      ) : (
-        <SimpleGrid columns={{ md: 3 }} gap={{ md: "7", xl: "8" }}>
-          {[1, 2, 3].map((i) => (
-            <Flex key={i} direction="column" align="stretch">
-              <Box aspectRatio="2.62" overflow="hidden" borderRadius="8px">
-                <Skeleton w="100%" h="100%" />
-              </Box>
-              <Flex direction="column" gap="2" pt="2" flex="1">
-                <Skeleton h="22px" w="86%" borderRadius="sm" />
-                <Skeleton h="16px" w="64%" borderRadius="sm" />
-                <Skeleton h="14px" w="34%" borderRadius="sm" />
-              </Flex>
-            </Flex>
-          ))}
-        </SimpleGrid>
-      )}
+      </Box>
     </Stack>
   );
 }

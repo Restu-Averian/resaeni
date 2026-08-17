@@ -11,12 +11,16 @@ export default function App() {
     <Routes>
       <Route element={<Layout />}>
         <Route index element={<HomePage />} />
+
         <Route path="/anime" element={<AnimeListPage />} />
+
         <Route path="/anime/:mal_id" element={<AnimeDetailsPage />} />
+
         <Route
           path="/anime/:mal_id/episode/:episode_number"
           element={<AnimeStreamingPage />}
         />
+
         <Route path="*" element={<NotFoundPage />} />
       </Route>
     </Routes>
