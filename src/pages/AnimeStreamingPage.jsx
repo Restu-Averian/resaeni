@@ -1,6 +1,6 @@
 import { Box, Container, Separator, Stack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useParams } from "react-router";
 import AnimeStreamingEpisodeNavigation from "../components/anime-streaming/anime-streaming-eps-navigation";
 import AnimeStreamingEpisodes from "../components/anime-streaming/anime-streaming-episodes";
@@ -17,6 +17,23 @@ function AnimeStreamingPage() {
   const { mal_id: malId, episode_number: episodeNumberParam } = useParams();
 
   const currentEpisodeNumber = Number(episodeNumberParam);
+  
+  const playerSectionRef = useRef(null);
+  const isFirstRender = useRef(true);
+  
+  useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
+    requestAnimationFrame(() => {
+      playerSectionRef.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    });
+  }, [currentEpisodeNumber]);
 
   const episodeQuery = useQuery({
     queryKey: ["anime-streaming", malId, episodeNumberParam],
@@ -24,7 +41,7 @@ function AnimeStreamingPage() {
   });
 
   const { episode, currentEpisode, selectedEmbedUrl } = useMemo(() => {
-    const episode = episodeQuery.data || episodeQuery.error?.response?.data;
+    const episode = episodeQuery.data || episodeQuery.error?.response?.data?.data;
 
     const links = episode?.links ?? [];
 
@@ -55,33 +72,30 @@ function AnimeStreamingPage() {
           py={{ base: "7", md: "10" }}
         >
           <Stack gap={{ base: "5", md: "6" }}>
-            {episodeQuery.isPending ? (
-              <>
-                <AnimeStreamingSkeletonHeader />
-
-                <AnimeStreamingSkeletonPlayer />
-
-                <AnimeStreamingSkeletonEpisodeNavigation />
-              </>
-            ) : episodeQuery.isError ? (
-              <>
-                <AnimeStreamingHeader episode={episode} isError />
-
-                <AnimeStreamingPlayer poster={imageErrorLandscape} />
-              </>
-            ) : (
-              <>
-                <AnimeStreamingHeader episode={episode} />
-
-                <AnimeStreamingPlayer
-                  selectedEmbedUrl={selectedEmbedUrl}
-                  poster={currentEpisode?.thumbnail_url}
-                  episodeNumber={currentEpisodeNumber}
-                />
-
-                <AnimeStreamingEpisodeNavigation episode={episode} />
-              </>
-            )}
+            <Stack ref={playerSectionRef} gap={{ base: "5", md: "6" }} scrollMarginTop="24">
+              {episodeQuery.isPending ? (
+                <>
+                  <AnimeStreamingSkeletonHeader />
+                  <AnimeStreamingSkeletonPlayer />
+                  <AnimeStreamingSkeletonEpisodeNavigation />
+                </>
+              ) : episodeQuery.isError ? (
+                <>
+                  <AnimeStreamingHeader episode={episode} isError />
+                  <AnimeStreamingPlayer poster={imageErrorLandscape} />
+                </>
+              ) : (
+                <>
+                  <AnimeStreamingHeader episode={episode} />
+                  <AnimeStreamingPlayer
+                    selectedEmbedUrl={selectedEmbedUrl}
+                    poster={currentEpisode?.thumbnail_url}
+                    episodeNumber={currentEpisodeNumber}
+                  />
+                  <AnimeStreamingEpisodeNavigation episode={episode} />
+                </>
+              )}
+            </Stack>
 
             <Separator borderColor="border.subtle" />
 

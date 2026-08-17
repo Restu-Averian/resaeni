@@ -3,7 +3,7 @@ import HomeSectionHeader from "../../home/HomeSectionHeader";
 import AnimeListDatasItemSkeleton from "../anime-list/AnimeListDatasItemSkeleton";
 
 function HomePicksSkeleton() {
-  const skeletons = Array.from({ length: 3 }, (_, i) => i);
+  const skeletons = Array.from({ length: 4 }, (_, i) => i);
 
   return (
     <Stack

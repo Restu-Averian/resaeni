@@ -5,11 +5,11 @@ export async function getAnimeList(params) {
     params,
   });
 
-  return response.data;
+  return response.data?.data;
 }
 
 export async function getAnimeListOptions() {
   const response = await api.get("/api/anime/options");
 
-  return response.data;
+  return response.data?.data;
 }

@@ -1,5 +1,5 @@
 import { createDatabaseClient } from "../../../db/client";
-import { databaseUnavailable, errorResponse } from "../../../utils/response";
+import { databaseUnavailable, errorResponse, successResponse } from "../../../utils/response";
 import {
   normalizeNullableEpisodeNumber,
   parseEpisodeNumber,
@@ -55,15 +55,15 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
 
     if (!episodeNumber) {
       return c.json(
-        {
-          ...errorResponse(
-            "INVALID_EPISODE_NUMBER",
-            "Episode number must be a positive number",
-          ),
-          title_en: anime.title_en,
-          title_romaji: anime.title_romaji,
-          title_native: anime.title_native,
-        },
+        errorResponse(
+          "INVALID_EPISODE_NUMBER",
+          "Episode number must be a positive number",
+          {
+            title_en: anime.title_en,
+            title_romaji: anime.title_romaji,
+            title_native: anime.title_native,
+          }
+        ),
         400,
       );
     }
@@ -83,12 +83,11 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
 
     if (!episode) {
       return c.json(
-        {
-          ...errorResponse("EPISODE_NOT_FOUND", "Episode not found"),
+        errorResponse("EPISODE_NOT_FOUND", "Episode not found", {
           title_en: anime.title_en,
           title_romaji: anime.title_romaji,
           title_native: anime.title_native,
-        },
+        }),
         404,
       );
     }
@@ -125,18 +124,20 @@ export const handleAnimeEpisode = async (c: AnimeDetailsContext) => {
       nextResult.rows[0]?.episode_number,
     );
 
-    return c.json({
-      title_en: anime.title_en,
-      title_romaji: anime.title_romaji,
-      title_native: anime.title_native,
-      episode_number: Number(episode.episode_number),
-      total_episodes: Number(totalResult.rows[0]?.total ?? 0),
-      aired_at: episode.aired_at,
-      previous_episode_number: previousEpisodeNumber,
-      next_episode_number: nextEpisodeNumber,
-      links: linksResult.rows as unknown as EpisodeLinkRow[],
-      thumbnail_url: episode?.thumbnail_url,
-    });
+    return c.json(
+      successResponse({
+        title_en: anime.title_en,
+        title_romaji: anime.title_romaji,
+        title_native: anime.title_native,
+        episode_number: Number(episode.episode_number),
+        total_episodes: Number(totalResult.rows[0]?.total ?? 0),
+        aired_at: episode.aired_at,
+        previous_episode_number: previousEpisodeNumber,
+        next_episode_number: nextEpisodeNumber,
+        links: linksResult.rows as unknown as EpisodeLinkRow[],
+        thumbnail_url: episode?.thumbnail_url,
+      }),
+    );
   } catch {
     return databaseUnavailable(c);
   }

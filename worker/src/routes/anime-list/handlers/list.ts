@@ -1,5 +1,5 @@
 import { createDatabaseClient } from "../../../db/client";
-import { databaseUnavailable, errorResponse } from "../../../utils/response";
+import { databaseUnavailable, errorResponse, successResponse } from "../../../utils/response";
 import { parseAired } from "../../anime-details/utils";
 import type { AnimeListContext } from "../types";
 import { orderByMap, parseOrder, parsePagination, trimQuery } from "../utils";
@@ -114,15 +114,17 @@ export const handleAnimeList = async (c: AnimeListContext) => {
       };
     });
 
-    return c.json({
-      items,
-      pagination: {
-        page,
-        limit,
-        total,
-        total_pages: Math.ceil(total / limit),
-      },
-    });
+    return c.json(
+      successResponse({
+        items,
+        pagination: {
+          page,
+          limit,
+          total,
+          total_pages: Math.ceil(total / limit),
+        },
+      }),
+    );
   } catch {
     return databaseUnavailable(c);
   }
