@@ -2,7 +2,7 @@ import { SimpleGrid } from "@chakra-ui/react";
 import AnimeListDatasItemSkeleton from "./AnimeListDatasItemSkeleton";
 
 function AnimeListDatasSkeleton() {
-  const skeletons = Array.from({ length: 8 }, (_, i) => i);
+  const skeletons = Array.from({ length: 3 }, (_, i) => i);
 
   return (
     <SimpleGrid

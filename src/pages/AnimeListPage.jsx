@@ -71,11 +71,7 @@ function AnimeListPage() {
 
   return (
     <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
-      <Container
-        maxW="1920px"
-        px="0"
-        py="0"
-      >
+      <Container maxW="1920px" px="0" py="0">
         <Stack
           gap={{ base: "7", md: "8" }}
           maxW="1696px"

@@ -1,37 +1,42 @@
-import { Box, Flex, HStack, Skeleton, SkeletonText } from "@chakra-ui/react";
+import { Box, Flex, HStack, Skeleton } from "@chakra-ui/react";
 
 function AnimeListDatasItemSkeleton() {
   return (
-    <Box
-      as="article"
-      layerStyle="interactiveSurface"
-      overflow="hidden"
-      boxShadow="media"
-      borderColor="border.subtle"
-      position="relative"
-      aspectRatio={{ base: "1.43", lg: "1.35" }}
-    >
-      <Skeleton w="full" h="full" />
+    <Flex direction="column" w="full" textAlign="left">
+      <Box
+        aspectRatio="0.73"
+        overflow="hidden"
+        border="1px solid"
+        borderColor="border.default"
+        borderRadius="8px"
+        boxShadow="media"
+        bg="bg.subtle"
+      >
+        <Skeleton w="full" h="full" />
+      </Box>
 
       <Flex
-        position="absolute"
-        inset="0"
-        bgImage="linear-gradient(180deg, rgba(3, 17, 31, 0.02) 0%, rgba(3, 17, 31, 0.12) 36%, rgba(3, 17, 31, 0.68) 74%, rgba(3, 17, 31, 0.92) 100%)"
         direction="column"
-        justify="flex-end"
-        gap="2"
-        px={{ base: "3", md: "4" }}
-        py={{ base: "3", md: "4" }}
+        gap={{ base: "1.5", md: "2" }}
+        pt={{ base: "3", md: "4" }}
+        minW="0"
       >
-        <SkeletonText noOfLines={2} skeletonHeight="4" width="80%" />
+        <Flex direction="column" gap="1.5">
+          <Skeleton height={{ base: "20px", md: "24px", xl: "28px" }} width="90%" />
+          <Skeleton height={{ base: "20px", md: "24px", xl: "28px" }} width="60%" />
+        </Flex>
 
-        <HStack gap="2">
-          <Skeleton height="3" width="6" />
+        <Skeleton height={{ base: "16px", md: "18px" }} width="70%" />
+
+        <HStack gap="1.5" mt="1">
+          <Skeleton height="3" width="10" />
           <Skeleton height="3" width="2" />
           <Skeleton height="3" width="10" />
+          <Skeleton height="3" width="2" />
+          <Skeleton height="3" width="16" />
         </HStack>
       </Flex>
-    </Box>
+    </Flex>
   );
 }
 
