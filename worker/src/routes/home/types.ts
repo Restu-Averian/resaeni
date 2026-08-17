@@ -25,9 +25,4 @@ export type TonightPickRow = {
   photo: string;
 };
 
-export type GenreRow = {
-  name: string;
-  anime_count: number;
-};
-
 export type HomeContext = Context<{ Bindings: Bindings }>;
