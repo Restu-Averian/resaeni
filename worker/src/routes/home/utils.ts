@@ -1,6 +1,6 @@
 export const FEATURED_ANIME_ID = "53149";
 
-export const TONIGHTS_PICK_IDS = ["53149", "32152", "32566"] as const;
+export const TONIGHTS_PICK_IDS = ["53149", "32152", "32566", "42632"] as const;
 
 export const parseGenres = (value: unknown): string[] => {
   if (typeof value !== "string") {

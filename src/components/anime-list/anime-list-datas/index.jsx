@@ -4,7 +4,7 @@ import AnimeListDatasItem from "./AnimeListDatasItem";
 function AnimeListDatas({ anime }) {
   return (
     <SimpleGrid
-      columns={{ base: 2, lg: 4 }}
+      minChildWidth={{ base: "140px", md: "180px", lg: "220px", xl: "260px" }}
       gap={{ base: "3", md: "4", xl: "5" }}
     >
       {anime.map((item) => (
