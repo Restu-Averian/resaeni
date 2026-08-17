@@ -47,15 +47,16 @@ function AnimeListPagination({ pagination, onPageChange }) {
       </Text>
 
       <HStack gap={{ base: "4", md: "2" }}>
-        <Button
-          variant="outline"
-          size={{ base: "lg", md: "sm" }}
-          disabled={page <= 1}
-          onClick={() => onPageChange(page - 1)}
-        >
-          <ArrowLeft size={16} strokeWidth={1.5} />
-          Previous
-        </Button>
+        {page > 1 && (
+          <Button
+            variant="outline"
+            size={{ base: "lg", md: "sm" }}
+            onClick={() => onPageChange(page - 1)}
+          >
+            <ArrowLeft size={16} strokeWidth={1.5} />
+            Previous
+          </Button>
+        )}
 
         {pages.map((pageNumber) => {
           return (
@@ -72,15 +73,16 @@ function AnimeListPagination({ pagination, onPageChange }) {
           );
         })}
 
-        <Button
-          variant="outline"
-          size={{ base: "lg", md: "sm" }}
-          disabled={page >= total_pages}
-          onClick={() => onPageChange(page + 1)}
-        >
-          Next
-          <ArrowRight size={16} strokeWidth={1.5} />
-        </Button>
+        {page < total_pages && (
+          <Button
+            variant="outline"
+            size={{ base: "lg", md: "sm" }}
+            onClick={() => onPageChange(page + 1)}
+          >
+            Next
+            <ArrowRight size={16} strokeWidth={1.5} />
+          </Button>
+        )}
       </HStack>
     </Flex>
   );
