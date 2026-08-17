@@ -1,11 +1,8 @@
-import {
-  Box,
-  Container,
-  HStack,
-  SimpleGrid,
-  Skeleton,
-  Stack,
-} from "@chakra-ui/react";
+import { Box, Container, Skeleton, Stack } from "@chakra-ui/react";
+import AnimeStreamingSkeletonHeader from "./AnimeStreamingSkeletonHeader";
+import AnimeStreamingSkeletonPlayer from "./AnimeStreamingSkeletonPlayer";
+import AnimeStreamingSkeletonEpisodeNavigation from "./AnimeStreamingSkeletonEpisodeNavigation";
+import AnimeStreamingSkeletonEpisodes from "./AnimeStreamingSkeletonEpisodes";
 
 function AnimeStreamingSkeleton() {
   return (
@@ -15,26 +12,16 @@ function AnimeStreamingSkeleton() {
         px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
         py={{ base: "7", md: "10" }}
       >
-        <Stack gap="6">
-          <Stack gap="3">
-            <Skeleton h="22px" w="190px" />
-            <Skeleton h="54px" maxW="620px" />
-            <Skeleton h="22px" w="140px" />
-          </Stack>
+        <Stack gap={{ base: "5", md: "6" }}>
+          <AnimeStreamingSkeletonHeader />
 
-          <Skeleton aspectRatio="16 / 9" borderRadius="media" />
-          <Skeleton h="74px" />
-          <HStack justify="center">
-            <Skeleton h="36px" w="90px" />
-            <Skeleton h="36px" w="116px" />
-            <Skeleton h="36px" w="116px" />
-          </HStack>
-          <Skeleton h="1px" />
-          <SimpleGrid columns={{ base: 1, sm: 2, lg: 3, xl: 6 }} gap="4">
-            {Array.from({ length: 12 }).map((_, index) => (
-              <Skeleton key={index} h="158px" borderRadius="control" />
-            ))}
-          </SimpleGrid>
+          <AnimeStreamingSkeletonPlayer />
+
+          <AnimeStreamingSkeletonEpisodeNavigation />
+
+          <Skeleton h="1px" w="full" />
+
+          <AnimeStreamingSkeletonEpisodes />
         </Stack>
       </Container>
     </Box>
