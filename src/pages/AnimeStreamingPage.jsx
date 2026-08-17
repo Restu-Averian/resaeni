@@ -8,7 +8,9 @@ import AnimeStreamingError from "../components/anime-streaming/AnimeStreamingErr
 import AnimeStreamingHeader from "../components/anime-streaming/AnimeStreamingHeader";
 import AnimeStreamingNotFound from "../components/anime-streaming/AnimeStreamingNotFound";
 import AnimeStreamingPlayer from "../components/anime-streaming/AnimeStreamingPlayer";
-import AnimeStreamingSkeleton from "../components/skeletons/anime-streaming/AnimeStreamingSkeleton";
+import AnimeStreamingSkeletonHeader from "../components/skeletons/anime-streaming/AnimeStreamingSkeletonHeader";
+import AnimeStreamingSkeletonPlayer from "../components/skeletons/anime-streaming/AnimeStreamingSkeletonPlayer";
+import AnimeStreamingSkeletonEpisodeNavigation from "../components/skeletons/anime-streaming/AnimeStreamingSkeletonEpisodeNavigation";
 import { getAnimeStreamingEpisode } from "../services/anime-streaming";
 import Seo from "../components/global/Seo";
 
@@ -63,10 +65,6 @@ function AnimeStreamingPage() {
     );
   }
 
-  if (episodeQuery.isPending) {
-    return <AnimeStreamingSkeleton />;
-  }
-
   if (episodeQuery.isError) {
     return (
       <>
@@ -95,15 +93,25 @@ function AnimeStreamingPage() {
           py={{ base: "7", md: "10" }}
         >
           <Stack gap={{ base: "5", md: "6" }}>
-            <AnimeStreamingHeader episode={episode} />
+            {episodeQuery.isPending ? (
+              <>
+                <AnimeStreamingSkeletonHeader />
+                <AnimeStreamingSkeletonPlayer />
+                <AnimeStreamingSkeletonEpisodeNavigation />
+              </>
+            ) : (
+              <>
+                <AnimeStreamingHeader episode={episode} />
 
-            <AnimeStreamingPlayer
-              selectedEmbedUrl={selectedEmbedUrl}
-              poster={currentEpisode?.thumbnail_url}
-              episodeNumber={currentEpisodeNumber}
-            />
+                <AnimeStreamingPlayer
+                  selectedEmbedUrl={selectedEmbedUrl}
+                  poster={currentEpisode?.thumbnail_url}
+                  episodeNumber={currentEpisodeNumber}
+                />
 
-            <AnimeStreamingEpisodeNavigation episode={episode} />
+                <AnimeStreamingEpisodeNavigation episode={episode} />
+              </>
+            )}
 
             <Separator borderColor="border.subtle" />
 
