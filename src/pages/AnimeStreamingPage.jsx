@@ -10,6 +10,7 @@ import AnimeStreamingNotFound from "../components/anime-streaming/AnimeStreaming
 import AnimeStreamingPlayer from "../components/anime-streaming/AnimeStreamingPlayer";
 import AnimeStreamingSkeleton from "../components/skeletons/anime-streaming/AnimeStreamingSkeleton";
 import { getAnimeStreamingEpisode } from "../services/anime-streaming";
+import Seo from "../components/global/Seo";
 
 function AnimeStreamingPage() {
   const { mal_id: malId, episode_number: episodeNumberParam } = useParams();
@@ -53,7 +54,13 @@ function AnimeStreamingPage() {
   }, [episodeQuery.data]);
 
   if (!isValidMalId || !isValidEpisodeNumber) {
-    return <AnimeStreamingNotFound />;
+    return (
+      <>
+        <Seo title="Invalid Episode | Resaeni" robots="noindex, nofollow" />
+
+        <AnimeStreamingNotFound />
+      </>
+    );
   }
 
   if (episodeQuery.isPending) {
@@ -61,33 +68,52 @@ function AnimeStreamingPage() {
   }
 
   if (episodeQuery.isError) {
-    return <AnimeStreamingError error={episodeQuery.error} />;
+    return (
+      <>
+        <Seo title="Error | Resaeni" robots="noindex, nofollow" />
+
+        <AnimeStreamingError error={episodeQuery.error} />
+      </>
+    );
   }
 
+  const title = currentEpisode?.title || `Episode ${currentEpisodeNumber}`;
+
   return (
-    <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
-      <Container
-        maxW="1696px"
-        px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
-        py={{ base: "7", md: "10" }}
-      >
-        <Stack gap={{ base: "5", md: "6" }}>
-          <AnimeStreamingHeader episode={episode} />
+    <>
+      <Seo
+        title={`${title} | Resaeni`}
+        description={`Watch ${title} on Resaeni.`}
+        canonicalPath={`/anime/${malId}/episode/${currentEpisodeNumber}`}
+        robots="noindex, follow"
+      />
 
-          <AnimeStreamingPlayer
-            selectedEmbedUrl={selectedEmbedUrl}
-            poster={currentEpisode?.thumbnail_url}
-            episodeNumber={currentEpisodeNumber}
-          />
+      <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
+        <Container
+          maxW="1696px"
+          px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
+          py={{ base: "7", md: "10" }}
+        >
+          <Stack gap={{ base: "5", md: "6" }}>
+            <AnimeStreamingHeader episode={episode} />
 
-          <AnimeStreamingEpisodeNavigation episode={episode} />
+            <AnimeStreamingPlayer
+              selectedEmbedUrl={selectedEmbedUrl}
+              poster={currentEpisode?.thumbnail_url}
+              episodeNumber={currentEpisodeNumber}
+            />
 
-          <Separator borderColor="border.subtle" />
+            <AnimeStreamingEpisodeNavigation episode={episode} />
 
-          <AnimeStreamingEpisodes currentEpisodeNumber={currentEpisodeNumber} />
-        </Stack>
-      </Container>
-    </Box>
+            <Separator borderColor="border.subtle" />
+
+            <AnimeStreamingEpisodes
+              currentEpisodeNumber={currentEpisodeNumber}
+            />
+          </Stack>
+        </Container>
+      </Box>
+    </>
   );
 }
 

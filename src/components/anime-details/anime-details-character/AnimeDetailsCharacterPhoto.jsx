@@ -21,6 +21,8 @@ function AnimeDetailsCharacterPhoto({ character, isCompact }) {
       <Image
         src={character.photo}
         alt={character.name}
+        loading="lazy"
+        decoding="async"
         w="full"
         h="full"
         objectFit="cover"

@@ -22,6 +22,7 @@ import {
   LIMIT,
 } from "../constants/anime-list.constants";
 import { getAnimeList } from "../services/anime-list.service";
+import Seo from "../components/global/Seo";
 
 function AnimeListPage() {
   const [search, setSearch] = useState("");
@@ -69,7 +70,14 @@ function AnimeListPage() {
   });
 
   return (
-    <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
+    <>
+      <Seo
+        title="Aeni Library | Resaeni"
+        description="Browse the library of Korean animated series and films."
+        canonicalPath="/anime"
+        robots="index, follow"
+      />
+      <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
       <Container maxW="1920px" px="0" py="0">
         <Stack
           gap={{ base: "7", md: "8" }}
@@ -138,6 +146,7 @@ function AnimeListPage() {
         </Stack>
       </Container>
     </Box>
+    </>
   );
 }
 

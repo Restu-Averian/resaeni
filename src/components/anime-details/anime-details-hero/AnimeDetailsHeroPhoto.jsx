@@ -17,7 +17,9 @@ function AnimeDetailsHeroPhoto({ anime }) {
     >
       <Image
         src={anime.photo || placeholderImage}
-        alt={anime.title_en || anime.title_romaji || "Anime poster"}
+        alt={anime.title_en || anime.title_romaji || "Aeni poster"}
+        loading="eager"
+        fetchPriority="high"
         w="full"
         h="full"
         objectFit="cover"

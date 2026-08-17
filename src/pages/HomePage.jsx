@@ -13,6 +13,7 @@ import { ArrowRight } from "lucide-react";
 import HomeHeroBanner from "../components/home/home-hero-banner";
 import HomePicksSection from "../components/home/home-picks";
 import HomeSkeleton from "../components/skeletons/home";
+import Seo from "../components/global/Seo";
 import { getHomeData } from "../services/home.service";
 
 function HomePage() {
@@ -25,8 +26,18 @@ function HomePage() {
     queryFn: getHomeData,
   });
 
+  const seoImage = homeData?.featured?.banner_bg_img;
+
   return (
-    <Box bg="bg.canvas">
+    <>
+      <Seo
+        title="Resaeni — Korean Animation & Aeni"
+        description="Discover and watch curated Korean animation and Aeni on Resaeni."
+        canonicalPath="/"
+        robots="index, follow"
+        image={seoImage}
+      />
+      <Box bg="bg.canvas">
       <Container maxW="100%" px="0" py="0">
         <Stack gap={{ base: "8", md: "0" }}>
           {error && (
@@ -93,6 +104,7 @@ function HomePage() {
         </Stack>
       </Container>
     </Box>
+    </>
   );
 }
 

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://resaeni.pages.dev/sitemap.xml

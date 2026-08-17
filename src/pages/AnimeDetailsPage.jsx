@@ -22,6 +22,7 @@ import {
   getAnimeDetails,
   getAnimeDetailsEpisodes,
 } from "../services/anime-details";
+import Seo from "../components/global/Seo";
 
 function AnimeDetailsPage() {
   const { mal_id: malId } = useParams();
@@ -60,18 +61,21 @@ function AnimeDetailsPage() {
 
   if (!isValidMalId) {
     return (
-      <Center minH="70vh" bg="bg.canvas" px="4">
-        <Stack layerStyle="panel" p="7" gap="5" align="center">
-          <Text as="h1" textStyle="sectionTitle" color="fg.heading">
-            Anime not found
-          </Text>
+      <>
+        <Seo title="Invalid Anime | Resaeni" robots="noindex, nofollow" />
+        <Center minH="70vh" bg="bg.canvas" px="4">
+          <Stack layerStyle="panel" p="7" gap="5" align="center">
+            <Text as="h1" textStyle="sectionTitle" color="fg.heading">
+              Anime not found
+            </Text>
 
-          <Text color="fg.muted">MAL ID must be a positive number.</Text>
-          <Button as={RouterLink} to="/">
-            Back to Home
-          </Button>
-        </Stack>
-      </Center>
+            <Text color="fg.muted">MAL ID must be a positive number.</Text>
+            <Button as={RouterLink} to="/">
+              Back to Home
+            </Button>
+          </Stack>
+        </Center>
+      </>
     );
   }
 
@@ -81,28 +85,44 @@ function AnimeDetailsPage() {
 
   if (detailsQuery.isError) {
     return (
-      <Center minH="70vh" bg="bg.canvas" px="4">
-        <Stack layerStyle="panel" p="7" gap="5" align="center" maxW="480px">
-          <Text as="h1" textStyle="sectionTitle" color="fg.heading">
-            Failed to load anime
-          </Text>
-          <Text color="fg.muted" textAlign="center">
-            {detailsQuery.error?.response?.data?.error?.message ||
-              "Failed to load anime details."}
-          </Text>
-          <Button as={RouterLink} to="/">
-            Back to Home
-          </Button>
-        </Stack>
-      </Center>
+      <>
+        <Seo title="Error | Resaeni" robots="noindex, nofollow" />
+        <Center minH="70vh" bg="bg.canvas" px="4">
+          <Stack layerStyle="panel" p="7" gap="5" align="center" maxW="480px">
+            <Text as="h1" textStyle="sectionTitle" color="fg.heading">
+              Failed to load anime
+            </Text>
+            <Text color="fg.muted" textAlign="center">
+              {detailsQuery.error?.response?.data?.error?.message ||
+                "Failed to load anime details."}
+            </Text>
+            <Button as={RouterLink} to="/">
+              Back to Home
+            </Button>
+          </Stack>
+        </Center>
+      </>
     );
   }
 
   const anime = detailsQuery.data;
   const episodes = episodesQuery.data?.items ?? [];
 
+  const title = `${anime.title_en || anime.title_romaji || "Aeni"} ${anime.title_native ? `(${anime.title_native})` : ""}`.trim();
+  const seoDescription = anime.synopsis
+    ? anime.synopsis.replace(/\s+/g, " ").substring(0, 160).trim() + "..."
+    : "Discover anime details on Resaeni.";
+
   return (
-    <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
+    <>
+      <Seo
+        title={`${title} | Resaeni`}
+        description={seoDescription}
+        canonicalPath={`/anime/${malId}`}
+        image={anime.banner_bg_img || anime.photo}
+        robots="index, follow"
+      />
+      <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
       <AnimeDetailsHero anime={anime} onJumpToEpisodes={jumpToEpisodes} />
 
       <Container
@@ -144,6 +164,7 @@ function AnimeDetailsPage() {
         />
       </Container>
     </Box>
+    </>
   );
 }
 

@@ -10,6 +10,8 @@ function AnimeDetailsEpisodesThumbnail({ episode }) {
         <Image
           src={episode.thumbnail_url}
           alt={`Episode ${episodeNumber}`}
+          loading="lazy"
+          decoding="async"
           w="full"
           h="full"
           objectFit="cover"
