@@ -5,13 +5,13 @@ function HomeSectionHeader({ icon: Icon, title }) {
     <HStack gap="3" align="center">
       {Icon ? (
         <Icon
-          size={22}
+          size={28}
           strokeWidth={1.6}
           color="var(--resaeni-colors-accent-primary)"
         />
       ) : null}
 
-      <Heading as="h2" textStyle="sectionTitle" color="fg.heading">
+      <Heading as="h2" textStyle="pageTitle" color="fg.heading">
         {title}
       </Heading>
     </HStack>
