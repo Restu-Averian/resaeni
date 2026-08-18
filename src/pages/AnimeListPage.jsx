@@ -91,8 +91,8 @@ function AnimeListPage() {
             {isMobile && <AnimeListHeader />}
 
             <Stack
-              position={{ base: "static", lg: "sticky" }}
-              top={{ lg: "72px" }}
+              position={{ base: "sticky", lg: "static" }}
+              top={{ base: "87px" }}
               zIndex="10"
               bg="bg.canvas"
               gap={{ base: "7", md: "8" }}

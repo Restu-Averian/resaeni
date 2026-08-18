@@ -49,7 +49,7 @@ function AnimeStreamingEpisodes({ currentEpisodeNumber }) {
           <Text color="fg.muted">No episodes available.</Text>
         </Box>
       ) : (
-        <SimpleGrid columns={{ base: 1, sm: 2, lg: 3, xl: 6 }} gap="4">
+        <SimpleGrid columns={{ base: 2, sm: 2, lg: 3, xl: 6 }} gap="4">
           {episodes.map((episode) => (
             <AnimeStreamingEpisodesItem
               key={episode.episode_number}
