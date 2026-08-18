@@ -56,10 +56,13 @@ function HomeHeroBannerCopy({ hero, titleSize }) {
         gap={{ base: "3", md: "5" }}
         flexWrap="wrap"
         pt={{ base: "4", md: "3" }}
+        w="full"
+        justify={{ base: "space-between", md: "flex-start" }}
       >
         <Button
           h={{ base: "56px", md: "58px" }}
-          minW={{ base: "200px", md: "194px" }}
+          minW={{ base: "0", md: "194px" }}
+          flex={{ base: 1, md: "initial" }}
           bg="accent.primary"
           color="fg.heading"
           _hover={{ bg: "accent.hover" }}
@@ -77,7 +80,8 @@ function HomeHeroBannerCopy({ hero, titleSize }) {
 
         <Button
           h={{ base: "56px", md: "58px" }}
-          minW={{ base: "200px", md: "200px" }}
+          minW={{ base: "0", md: "200px" }}
+          flex={{ base: 1, md: "initial" }}
           bg="transparent"
           color="fg.heading"
           _hover={{ bg: "whiteAlpha.100" }}
