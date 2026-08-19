@@ -1,6 +1,12 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
+import {
+  SITE_ORIGIN,
+  buildSitemapXml,
+  normalizeSitemapUrls,
+  shouldFailOnApiError,
+} from "./sitemap-utils.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,10 +17,10 @@ try {
   // Ignore, file might not exist in production
 }
 
-const siteUrl = process.env.VITE_SITE_URL || "https://resaeni.cc";
 const apiBaseUrl = process.env.VITE_API_BASE_URL || "http://localhost:8787";
+const nodeEnv = process.env.NODE_ENV || "development";
 
-const origin = siteUrl.replace(/\/+$/, "");
+const origin = SITE_ORIGIN;
 
 const sitemapPath = path.resolve(__dirname, "../public/sitemap.xml");
 const robotsPath = path.resolve(__dirname, "../public/robots.txt");
@@ -51,13 +57,16 @@ async function fetchAnimeIds() {
       } else {
         page++;
       }
-    } catch (err) {
-      console.warn(
-        `[Sitemap] Warning: Failed to fetch anime list from API: ${err.message}`,
-      );
-      console.warn(
-        "[Sitemap] Sitemap will only contain static routes and any fetched so far.",
-      );
+    } catch (error) {
+      const message = `Failed to fetch anime list from ${apiBaseUrl}/api/anime?page=${page}&limit=${limit}: ${error.message}`;
+      if (shouldFailOnApiError(nodeEnv, apiBaseUrl)) {
+        throw new Error(
+          `${message}. Production sitemap generation needs a reachable VITE_API_BASE_URL so detail URLs are complete.`,
+        );
+      }
+
+      console.warn(`[Sitemap] Warning: ${message}`);
+      console.warn("[Sitemap] Local sitemap will contain static routes only.");
       hasMore = false;
     }
   }
@@ -67,12 +76,8 @@ async function generate() {
   console.log("[Sitemap] Generating sitemap...");
   await fetchAnimeIds();
 
-  const allUrls = [...staticUrls, ...dynamicUrls];
-
-  const sitemapXml = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${allUrls.map((url) => `  <url>\n    <loc>${url}</loc>\n  </url>`).join("\n")}
-</urlset>`;
+  const allUrls = normalizeSitemapUrls([...staticUrls, ...dynamicUrls]);
+  const sitemapXml = buildSitemapXml(allUrls);
 
   const robotsTxt = `User-agent: *
 Allow: /
@@ -92,4 +97,7 @@ Sitemap: ${origin}/sitemap.xml
   console.log(`[Sitemap] Generated robots.txt.`);
 }
 
-generate().catch(console.error);
+generate().catch((error) => {
+  console.error(error.message);
+  process.exitCode = 1;
+});
