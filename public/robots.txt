@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://resaeni.pages.dev/sitemap.xml
+Sitemap: https://resaeni.cc/sitemap.xml

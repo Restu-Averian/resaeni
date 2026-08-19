@@ -39,7 +39,7 @@ npm run dev
 
 The production deployment requires the following environment variables:
 
-- `VITE_SITE_URL`: The canonical URL of the production site (e.g., `https://resaeni.pages.dev`). This is required for accurate canonical tags, Open Graph URLs, and the dynamically generated `sitemap.xml` and `robots.txt`.
+- `VITE_SITE_URL`: The canonical URL of the production site (e.g., `https://resaeni.cc`). This is required for accurate canonical tags, Open Graph URLs, and the dynamically generated `sitemap.xml` and `robots.txt`.
 - `VITE_API_BASE_URL`: The URL of the backend API, required to fetch Aeni data at build time for sitemap generation.
 
 ### Google Search Console Setup

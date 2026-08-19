@@ -11,7 +11,7 @@ try {
   // Ignore, file might not exist in production
 }
 
-const siteUrl = process.env.VITE_SITE_URL || "https://resaeni.pages.dev";
+const siteUrl = process.env.VITE_SITE_URL || "https://resaeni.cc";
 const apiBaseUrl = process.env.VITE_API_BASE_URL || "http://localhost:8787";
 
 const origin = siteUrl.replace(/\/+$/, "");
