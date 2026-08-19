@@ -39,17 +39,18 @@ npm run dev
 
 The production deployment requires the following environment variables:
 
-- `VITE_SITE_URL`: The canonical URL of the production site (e.g., `https://resaeni.pages.dev`). This is required for accurate canonical tags, Open Graph URLs, and the dynamically generated `sitemap.xml` and `robots.txt`.
+- `VITE_SITE_URL`: The canonical URL of the production site. Use `https://resaeni.cc`.
 - `VITE_API_BASE_URL`: The URL of the backend API, required to fetch Aeni data at build time for sitemap generation.
 
 ### Google Search Console Setup
 
 Follow these manual steps after deploying to production:
 
-1. Deploy the production Resaeni `*.pages.dev` site.
-2. Confirm the production URL does not return an `X-Robots-Tag: noindex` header.
-3. Add the **production URL** to Google Search Console as a new property.
-4. Submit the sitemap at `/sitemap.xml`.
-5. Use the URL Inspection tool on the Home page (`/`), Library page (`/anime`), and one real Detail page (`/anime/:id`).
-6. Request indexing where appropriate.
-7. **Never** submit Cloudflare preview or branch deployment URLs as the canonical site.
+1. Use `https://resaeni.cc` as the production canonical domain.
+2. Permanently redirect the legacy Cloudflare Pages domain to `https://resaeni.cc` with HTTP 301.
+3. Preserve the path and query string in that redirect.
+4. Keep Cloudflare Pages preview deployments noindex.
+5. Add `https://resaeni.cc` to Google Search Console.
+6. Submit `https://resaeni.cc/sitemap.xml`.
+7. Inspect `/`, `/anime`, and at least one real `/anime/:id`.
+8. Request indexing where appropriate.

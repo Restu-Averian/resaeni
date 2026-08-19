@@ -73,9 +73,8 @@ function AnimeListPage() {
     <>
       <Seo
         title="Aeni Library | Resaeni"
-        description="Browse the library of Korean animated series and films."
+        description="Browse Korean animated series and films in the Resaeni Aeni library."
         canonicalPath="/anime"
-        robots="index, follow"
       />
 
       <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>

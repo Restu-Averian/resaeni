@@ -1,9 +1,8 @@
 import { Play } from "lucide-react";
 import { Button, Heading, HStack, Stack, Text } from "@chakra-ui/react";
-import { useNavigate } from "react-router";
+import { Link as RouterLink } from "react-router";
 
 function HomeHeroBannerCopy({ hero, titleSize }) {
-  const navigate = useNavigate();
   const episodeLabel = hero?.episodes_count
     ? `${hero.episodes_count} ${hero.episodes_count === 1 ? "Episode" : "Episodes"}`
     : null;
@@ -72,7 +71,8 @@ function HomeHeroBannerCopy({ hero, titleSize }) {
           fontWeight="700"
           border="1px solid"
           borderColor="whiteAlpha.300"
-          onClick={() => navigate(`/anime/${hero?.id}/episode/1`)}
+          as={RouterLink}
+          to={`/anime/${hero?.id}/episode/1`}
         >
           <Play size={18} fill="currentColor" />
           Watch Now
@@ -91,7 +91,8 @@ function HomeHeroBannerCopy({ hero, titleSize }) {
           fontWeight="700"
           border="1px solid"
           borderColor="border.default"
-          onClick={() => navigate(`/anime/${hero?.id}`)}
+          as={RouterLink}
+          to={`/anime/${hero?.id}`}
         >
           View Details
         </Button>

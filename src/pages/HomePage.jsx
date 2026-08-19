@@ -6,7 +6,9 @@ import HomeHeroBanner from "../components/home/home-hero-banner";
 import HomePicksSection from "../components/home/home-picks";
 import HomeError from "../components/home/home-error";
 import HomeSkeleton from "../components/skeletons/home";
+import JsonLd from "../components/global/JsonLd";
 import Seo from "../components/global/Seo";
+import { buildWebsiteSchema } from "../lib/seo";
 import { getHomeData } from "../services/home.service";
 
 function HomePage() {
@@ -25,11 +27,12 @@ function HomePage() {
     <>
       <Seo
         title="Resaeni — Korean Animation & Aeni"
-        description="Discover and watch curated Korean animation and Aeni on Resaeni."
+        description="Resaeni is a curated place to discover and watch Korean animation and Aeni."
         canonicalPath="/"
-        robots="index, follow"
         image={seoImage}
+        imageAlt="Featured Aeni artwork on Resaeni"
       />
+      <JsonLd data={buildWebsiteSchema()} />
 
       <Box bg="bg.canvas">
         <Container maxW="100%" px="0" py="0">

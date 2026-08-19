@@ -17,10 +17,15 @@ import AnimeDetailsOverview from "../components/anime-details/AnimeDetailsOvervi
 import AnimeDetailsSynopsis from "../components/anime-details/AnimeDetailsSynopsis";
 import AnimeDetailsTabs from "../components/anime-details/AnimeDetailsTabs";
 import AnimeDetailsSkeleton from "../components/skeletons/anime-details/AnimeDetailsSkeleton";
-import {
-  getAnimeDetails,
-} from "../services/anime-details";
+import JsonLd from "../components/global/JsonLd";
+import { getAnimeDetails } from "../services/anime-details";
 import Seo from "../components/global/Seo";
+import {
+  buildAnimeDescription,
+  buildAnimeSchemas,
+  buildAnimeTitle,
+  buildCanonicalUrl,
+} from "../lib/seo";
 
 function AnimeDetailsPage() {
   const { mal_id: malId } = useParams();
@@ -51,6 +56,7 @@ function AnimeDetailsPage() {
     return (
       <>
         <Seo title="Invalid Anime | Resaeni" robots="noindex, nofollow" />
+
         <Center minH="70vh" bg="bg.canvas" px="4">
           <Stack layerStyle="panel" p="7" gap="5" align="center">
             <Text as="h1" textStyle="sectionTitle" color="fg.heading">
@@ -75,6 +81,7 @@ function AnimeDetailsPage() {
     return (
       <>
         <Seo title="Error | Resaeni" robots="noindex, nofollow" />
+
         <Center minH="70vh" bg="bg.canvas" px="4">
           <Stack layerStyle="panel" p="7" gap="5" align="center" maxW="480px">
             <Text as="h1" textStyle="sectionTitle" color="fg.heading">
@@ -95,59 +102,60 @@ function AnimeDetailsPage() {
 
   const anime = detailsQuery.data;
 
-  const title = `${anime.title_en || anime.title_romaji || "Aeni"} ${anime.title_native ? `(${anime.title_native})` : ""}`.trim();
-  const seoDescription = anime.synopsis
-    ? anime.synopsis.replace(/\s+/g, " ").substring(0, 160).trim() + "..."
-    : "Discover anime details on Resaeni.";
+  const title = buildAnimeTitle(anime);
+  const seoDescription = buildAnimeDescription(anime);
+  const canonicalPath = `/anime/${malId}`;
+  const canonicalUrl = buildCanonicalUrl(canonicalPath);
 
   return (
     <>
       <Seo
         title={`${title} | Resaeni`}
         description={seoDescription}
-        canonicalPath={`/anime/${malId}`}
+        canonicalPath={canonicalPath}
         image={anime.banner_bg_img || anime.photo}
-        robots="index, follow"
+        imageAlt={`${title} artwork`}
       />
+
+      <JsonLd data={buildAnimeSchemas({ anime, canonicalUrl })} />
+
       <Box minH="100vh" bg="bg.canvas" pb={{ base: "28", md: "12" }}>
-      <AnimeDetailsHero anime={anime} onJumpToEpisodes={jumpToEpisodes} />
+        <AnimeDetailsHero anime={anime} onJumpToEpisodes={jumpToEpisodes} />
 
-      <Container
-        maxW="1696px"
-        px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
-        py={{ base: "8", md: "12" }}
-      >
-        <AnimeDetailsTabs
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          overviewContent={
-            <Stack gap={{ base: "9", md: "12" }}>
-              <Grid
-                templateColumns={{ base: "1fr", lg: "minmax(0, 1fr) 360px" }}
-                gap={{ base: "5", md: "6" }}
-                alignItems="start"
-              >
-                <AnimeDetailsSynopsis synopsis={anime.synopsis} />
+        <Container
+          maxW="1696px"
+          px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
+          py={{ base: "8", md: "12" }}
+        >
+          <AnimeDetailsTabs
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+            overviewContent={
+              <Stack gap={{ base: "9", md: "12" }}>
+                <Grid
+                  templateColumns={{ base: "1fr", lg: "minmax(0, 1fr) 360px" }}
+                  gap={{ base: "5", md: "6" }}
+                  alignItems="start"
+                >
+                  <AnimeDetailsSynopsis synopsis={anime.synopsis} />
 
-                <AnimeDetailsOverview anime={anime} />
-              </Grid>
+                  <AnimeDetailsOverview anime={anime} />
+                </Grid>
 
-              <Box ref={episodesRef}>
-                <AnimeDetailsEpisodes
-                  enabled={detailsQuery.isSuccess}
-                />
-              </Box>
-            </Stack>
-          }
-          charactersContent={
-            <AnimeDetailsCharacters
-              malId={malId}
-              enabled={detailsQuery.isSuccess}
-            />
-          }
-        />
-      </Container>
-    </Box>
+                <Box ref={episodesRef}>
+                  <AnimeDetailsEpisodes enabled={detailsQuery.isSuccess} />
+                </Box>
+              </Stack>
+            }
+            charactersContent={
+              <AnimeDetailsCharacters
+                malId={malId}
+                enabled={detailsQuery.isSuccess}
+              />
+            }
+          />
+        </Container>
+      </Box>
     </>
   );
 }

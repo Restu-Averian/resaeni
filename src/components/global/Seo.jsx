@@ -1,3 +1,8 @@
+import {
+  buildCanonicalUrl,
+  normalizeImageUrl,
+} from "../../lib/seo";
+
 /**
  * Komponen untuk mengatur meta tags dan SEO halaman.
  *
@@ -6,25 +11,22 @@
  * @param {string} [props.description] - Deskripsi halaman (meta description & og:description).
  * @param {string} [props.canonicalPath] - Path relatif halaman untuk URL canonical (misal: "/anime/1").
  * @param {string} [props.image] - URL gambar untuk meta image (OG & Twitter).
+ * @param {string} [props.imageAlt] - Teks alternatif gambar sosial.
  * @param {string} [props.type="website"] - Tipe Open Graph konten (default: "website").
  * @param {string} [props.robots="index, follow"] - Instruksi indexing buat bot crawler.
  */
+
 export default function Seo({
   title,
   description,
   canonicalPath,
   image,
+  imageAlt,
   type = "website",
-  robots = "index, follow",
+  robots = "index, follow, max-image-preview:large, max-snippet:-1",
 }) {
-  const siteUrl = import.meta.env.VITE_SITE_URL || window.location.origin;
-
-  // Normalize URL logic
-  const formattedPath = canonicalPath?.startsWith("/")
-    ? canonicalPath
-    : `/${canonicalPath || ""}`;
-  const origin = siteUrl.replace(/\/+$/, "");
-  const canonicalUrl = `${origin}${formattedPath}`;
+  const canonicalUrl = buildCanonicalUrl(canonicalPath);
+  const imageUrl = normalizeImageUrl(image);
 
   return (
     <>
@@ -33,28 +35,35 @@ export default function Seo({
 
       <meta name="robots" content={robots} />
 
-      <link rel="canonical" href={canonicalUrl} />
+      {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
 
       <meta property="og:title" content={title} />
 
       {description && <meta property="og:description" content={description} />}
 
       <meta property="og:type" content={type} />
-      <meta property="og:url" content={canonicalUrl} />
+      {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       <meta property="og:site_name" content="Resaeni" />
+      <meta property="og:locale" content="en_US" />
 
-      {image && <meta property="og:image" content={image} />}
+      {imageUrl && <meta property="og:image" content={imageUrl} />}
+      {imageUrl && imageAlt && (
+        <meta property="og:image:alt" content={imageAlt} />
+      )}
 
       <meta
         name="twitter:card"
-        content={image ? "summary_large_image" : "summary"}
+        content={imageUrl ? "summary_large_image" : "summary"}
       />
 
       <meta name="twitter:title" content={title} />
 
       {description && <meta name="twitter:description" content={description} />}
 
-      {image && <meta name="twitter:image" content={image} />}
+      {imageUrl && <meta name="twitter:image" content={imageUrl} />}
+      {imageUrl && imageAlt && (
+        <meta name="twitter:image:alt" content={imageAlt} />
+      )}
     </>
   );
 }
