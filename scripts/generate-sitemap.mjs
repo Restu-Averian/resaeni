@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { pathToFileURL } from "url";
 import { fileURLToPath } from "url";
 import {
   SITE_ORIGIN,
@@ -19,13 +20,14 @@ try {
 
 const apiBaseUrl = process.env.VITE_API_BASE_URL || "http://localhost:8787";
 const nodeEnv = process.env.NODE_ENV || "development";
+const siteUrl = process.env.VITE_SITE_URL;
 
 const origin = SITE_ORIGIN;
 
 const sitemapPath = path.resolve(__dirname, "../public/sitemap.xml");
 const robotsPath = path.resolve(__dirname, "../public/robots.txt");
 
-const staticUrls = [`${origin}/`, `${origin}/anime`];
+const staticUrls = [{ url: `${origin}/` }, { url: `${origin}/anime` }];
 
 const dynamicUrls = [];
 
@@ -45,7 +47,10 @@ async function fetchAnimeIds() {
       const items = data.items || [];
 
       for (const item of items) {
-        dynamicUrls.push(`${origin}/anime/${item.id}`);
+        dynamicUrls.push({
+          url: `${origin}/anime/${item.id}`,
+          lastmod: item.updated_at,
+        });
       }
 
       if (
@@ -59,7 +64,7 @@ async function fetchAnimeIds() {
       }
     } catch (error) {
       const message = `Failed to fetch anime list from ${apiBaseUrl}/api/anime?page=${page}&limit=${limit}: ${error.message}`;
-      if (shouldFailOnApiError(nodeEnv, apiBaseUrl)) {
+      if (shouldFailOnApiError(nodeEnv, siteUrl)) {
         throw new Error(
           `${message}. Production sitemap generation needs a reachable VITE_API_BASE_URL so detail URLs are complete.`,
         );
@@ -76,8 +81,10 @@ async function generate() {
   console.log("[Sitemap] Generating sitemap...");
   await fetchAnimeIds();
 
-  const allUrls = normalizeSitemapUrls([...staticUrls, ...dynamicUrls]);
-  const sitemapXml = buildSitemapXml(allUrls);
+  const allUrls = normalizeSitemapUrls(
+    [...staticUrls, ...dynamicUrls].map((entry) => entry.url),
+  );
+  const sitemapXml = buildSitemapXml([...staticUrls, ...dynamicUrls]);
 
   const robotsTxt = `User-agent: *
 Allow: /
@@ -97,7 +104,9 @@ Sitemap: ${origin}/sitemap.xml
   console.log(`[Sitemap] Generated robots.txt.`);
 }
 
-generate().catch((error) => {
-  console.error(error.message);
-  process.exitCode = 1;
-});
+if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+  generate().catch((error) => {
+    console.error(error.message);
+    process.exitCode = 1;
+  });
+}

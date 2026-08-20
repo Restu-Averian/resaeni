@@ -1,4 +1,3 @@
-
 const normalizePathname = (pathname) => {
   if (!pathname || pathname === "/") return "/";
   return `/${pathname.replace(/^\/+|\/+$/g, "")}`;
@@ -69,11 +68,27 @@ const cleanObject = (object) =>
 
 export const buildWebsiteSchema = () => ({
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: "Resaeni",
-  url: "https://resaeni.cc/",
-  description:
-    "Resaeni is a curated place to discover and watch Korean animation and Aeni.",
+  "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://resaeni.cc/#website",
+      name: "Resaeni",
+      alternateName: "Resaeni Aeni",
+      url: "https://resaeni.cc/",
+      description:
+        "Resaeni is a curated place to discover and watch Korean animation and Aeni.",
+      publisher: {
+        "@id": "https://resaeni.cc/#organization",
+      },
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://resaeni.cc/#organization",
+      name: "Resaeni",
+      url: "https://resaeni.cc/",
+      logo: "https://resaeni.cc/brand/resaeni-icon-square.png",
+    },
+  ],
 });
 
 export const buildAnimeSchemas = ({ anime, canonicalUrl }) => {

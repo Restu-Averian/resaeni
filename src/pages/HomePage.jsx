@@ -26,7 +26,7 @@ function HomePage() {
   return (
     <>
       <Seo
-        title="Resaeni — Korean Animation & Aeni"
+        title="Resaeni — Discover Korean Animation & Aeni"
         description="Resaeni is a curated place to discover and watch Korean animation and Aeni."
         canonicalPath="/"
         image={seoImage}

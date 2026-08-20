@@ -1,5 +1,9 @@
 import { createDatabaseClient } from "../../../db/client";
-import { databaseUnavailable, errorResponse, successResponse } from "../../../utils/response";
+import {
+  databaseUnavailable,
+  errorResponse,
+  successResponse,
+} from "../../../utils/response";
 import { parseAired } from "../../anime-details/utils";
 import type { AnimeListContext } from "../types";
 import { orderByMap, parseOrder, parsePagination, trimQuery } from "../utils";
@@ -71,6 +75,7 @@ export const handleAnimeList = async (c: AnimeListContext) => {
 						photo,
 						season,
 						aired,
+						updated_at,
 						(
 							SELECT COUNT(*)
 							FROM episodes
@@ -111,6 +116,8 @@ export const handleAnimeList = async (c: AnimeListContext) => {
         photo: typeof item.photo === "string" ? item.photo : null,
         episodes_count: Number(item.episodes_count ?? 0),
         year: aired.year,
+        updated_at:
+          typeof item.updated_at === "string" ? item.updated_at : null,
       };
     });
 

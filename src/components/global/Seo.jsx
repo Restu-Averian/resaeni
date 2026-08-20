@@ -1,7 +1,4 @@
-import {
-  buildCanonicalUrl,
-  normalizeImageUrl,
-} from "../../lib/seo";
+import { buildCanonicalUrl, normalizeImageUrl } from "../../lib/seo";
 
 /**
  * Komponen untuk mengatur meta tags dan SEO halaman.
@@ -20,8 +17,8 @@ export default function Seo({
   title,
   description,
   canonicalPath,
-  image,
-  imageAlt,
+  image = "/social/resaeni-og-image.png",
+  imageAlt = "Resaeni Korean animation and Aeni discovery artwork",
   type = "website",
   robots = "index, follow, max-image-preview:large, max-snippet:-1",
 }) {
