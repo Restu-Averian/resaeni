@@ -1,4 +1,4 @@
-import { Box, Container, Flex, HStack, Link, Text } from "@chakra-ui/react";
+import { Box, Container, Flex, HStack, Image, Link } from "@chakra-ui/react";
 import { NAV_ITEMS } from "../../../constants/navbar.constants";
 import { isNavItemActive } from "../../../helpers/navbar.utils";
 import { Link as RouterLink } from "react-router";
@@ -27,18 +27,14 @@ function Navbar() {
           minH={{ base: "86px", md: "72px" }}
           gap="8"
         >
-          <Text
-            as={RouterLink}
-            to="/"
-            textStyle="display"
-            fontSize={{ base: "4xl", md: "4xl" }}
-            color="fg.heading"
-            lineHeight="1"
-            textDecoration="none"
-            _hover={{ color: "fg.heading", textDecoration: "none" }}
-          >
-            Resaeni
-          </Text>
+          <Box as={RouterLink} to="/" display="flex" alignItems="center">
+            <Image
+              src="/brand/resaeni-logo-horizontal.png"
+              alt="Resaeni Logo"
+              h="auto"
+              w={{ base: "280px", md: "220px" }}
+            />
+          </Box>
 
           <HStack as="nav" display={{ base: "none", md: "flex" }} gap="9">
             {NAV_ITEMS.map((item) => {
