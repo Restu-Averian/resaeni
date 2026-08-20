@@ -9,7 +9,7 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "node scripts/generate-sitemap.mjs && vite build",
+    "build": "node scripts/generate-sitemap.mjs && vite build && node scripts/prerender-seo.mjs",
     "preview": "vite preview",
     "test": "node --test scripts/seo.test.mjs",
     "lint": "eslint .",
