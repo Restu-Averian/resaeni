@@ -7,6 +7,8 @@ import imageErrorPortrait from "../../assets/images/states/image-error-portrait.
 import imageErrorLandscape from "../../assets/images/states/image-error-landscape.webp";
 import imageErrorSquare from "../../assets/images/states/image-error-square.webp";
 
+import { getAssetUrl } from "../../helpers/asset.utils";
+
 const imageStateAssets = {
   portrait: {
     placeholder: placeholderPortrait,
@@ -46,13 +48,14 @@ function ResaeniImage({
   objectPosition = "center",
   ...rest
 }) {
-  const [status, setStatus] = useState(!src ? "error" : "loading");
-  const [prevSrc, setPrevSrc] = useState(src);
+  const resolvedSrc = getAssetUrl(src);
+  const [status, setStatus] = useState(!resolvedSrc ? "error" : "loading");
+  const [prevSrc, setPrevSrc] = useState(resolvedSrc);
 
-  if (src !== prevSrc) {
-    setPrevSrc(src);
+  if (resolvedSrc !== prevSrc) {
+    setPrevSrc(resolvedSrc);
 
-    setStatus(!src ? "error" : "loading");
+    setStatus(!resolvedSrc ? "error" : "loading");
   }
 
   const assets = imageStateAssets[variant] || imageStateAssets.portrait;
@@ -69,9 +72,9 @@ function ResaeniImage({
         objectPosition={objectPosition}
       />
 
-      {src && status !== "error" && (
+      {resolvedSrc && status !== "error" && (
         <ChakraImage
-          src={src}
+          src={resolvedSrc}
           alt={alt}
           loading={loading}
           decoding={decoding}

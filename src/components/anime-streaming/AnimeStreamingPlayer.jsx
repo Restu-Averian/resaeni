@@ -1,7 +1,10 @@
 import { Center } from "@chakra-ui/react";
 import { BASE_VIDEO_URL } from "../../constants/anime-streaming.constants";
+import { getAssetUrl } from "../../helpers/asset.utils";
 
 function AnimeStreamingPlayer({ selectedEmbedUrl, poster }) {
+  const posterUrl = getAssetUrl(poster);
+
   return (
     <Center
       aspectRatio="16 / 9"
@@ -16,7 +19,7 @@ function AnimeStreamingPlayer({ selectedEmbedUrl, poster }) {
       <video
         key={selectedEmbedUrl}
         src={`${BASE_VIDEO_URL}${selectedEmbedUrl}`}
-        poster={poster || undefined}
+        poster={posterUrl || undefined}
         controls
         playsInline
         preload="metadata"

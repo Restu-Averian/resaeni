@@ -1,5 +1,6 @@
 import { Avatar, Box } from "@chakra-ui/react";
 import ResaeniImage from "../../global/ResaeniImage";
+import { getAssetUrl } from "../../../helpers/asset.utils";
 
 function AnimeDetailsCharacterPhoto({ character, isCompact }) {
   const size = {
@@ -20,7 +21,7 @@ function AnimeDetailsCharacterPhoto({ character, isCompact }) {
       boxShadow="media"
     >
       <ResaeniImage
-        src={character.photo}
+        src={getAssetUrl(character.photo)}
         alt={character.name}
         variant="square"
         loading="lazy"

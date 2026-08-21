@@ -18,7 +18,11 @@ export const normalizeImageUrl = (image) => {
   if (!image) return null;
 
   try {
-    const url = new URL(image, "https://resaeni.cc");
+    const base =
+      image.startsWith("/social") || image.startsWith("/brand")
+        ? "https://resaeni.cc"
+        : "https://assets.resaeni.cc";
+    const url = new URL(image, base);
     return url.protocol === "http:" || url.protocol === "https:"
       ? url.href
       : null;

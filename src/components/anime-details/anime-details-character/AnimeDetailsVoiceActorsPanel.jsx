@@ -12,6 +12,7 @@ import {
 } from "@chakra-ui/react";
 import ResaeniImage from "../../global/ResaeniImage";
 import { Globe2, X } from "lucide-react";
+import { getAssetUrl } from "../../../helpers/asset.utils";
 
 function VoiceActorsContent({ character, onClose }) {
   const voiceActors = character.voice_actors ?? [];
@@ -37,7 +38,7 @@ function VoiceActorsContent({ character, onClose }) {
       <HStack gap="4" align="center">
         {character.photo ? (
           <ResaeniImage
-            src={character.photo}
+            src={getAssetUrl(character.photo)}
             alt={character.name}
             variant="square"
             boxSize={{ base: "72px", md: "84px" }}
@@ -108,7 +109,7 @@ function VoiceActorsContent({ character, onClose }) {
               <HStack gap="4" minW="0">
                 {voiceActor.photo ? (
                   <ResaeniImage
-                    src={voiceActor.photo}
+                    src={getAssetUrl(voiceActor.photo)}
                     alt={voiceActor.name}
                     variant="square"
                     boxSize="56px"
