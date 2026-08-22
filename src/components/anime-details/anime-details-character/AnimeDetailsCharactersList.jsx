@@ -17,7 +17,7 @@ function AnimeDetailsCharactersList({
         columns={{
           base: 2,
           md: isCompact ? 3 : 4,
-          xl: isCompact ? 2 : 5,
+          xl: isCompact ? 3 : 5,
         }}
         gap={{
           base: "4",

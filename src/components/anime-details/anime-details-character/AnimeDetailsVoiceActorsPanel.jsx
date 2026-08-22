@@ -85,10 +85,12 @@ function VoiceActorsContent({ character, onClose }) {
           Available Voice Actors
         </Text>
 
-        <HStack color="fg.muted" gap="2">
-          <Globe2 size={18} />
-          <Text>Multiple Languages</Text>
-        </HStack>
+        {voiceActors?.length > 1 ? (
+          <HStack color="fg.muted" gap="2">
+            <Globe2 size={18} />
+            <Text>Multiple Languages</Text>
+          </HStack>
+        ) : null}
       </Flex>
 
       {voiceActors.length === 0 ? (
@@ -123,25 +125,19 @@ function VoiceActorsContent({ character, onClose }) {
                   </Avatar.Root>
                 )}
 
-                <Stack gap="1" minW="0">
-                  <Text
-                    color="fg.heading"
-                    fontWeight="700"
-                    fontSize="lg"
-                    lineClamp="1"
-                  >
-                    {voiceActor.name}
-                  </Text>
-
-                  {voiceActor.country && (
-                    <Badge variant="warm">{voiceActor.country}</Badge>
-                  )}
-                </Stack>
+                <Text
+                  color="fg.heading"
+                  fontWeight="700"
+                  fontSize="lg"
+                  lineClamp="1"
+                >
+                  {voiceActor.name}
+                </Text>
               </HStack>
 
-              <Text color="fg.muted" flexShrink="0">
-                Voice Actor
-              </Text>
+              {voiceActor.country && (
+                <Badge variant="warm">{voiceActor.country}</Badge>
+              )}
             </Flex>
           ))}
         </Stack>
@@ -170,6 +166,7 @@ function AnimeDetailsVoiceActorsPanel({
       >
         <Portal>
           <Drawer.Backdrop />
+
           <Drawer.Positioner>
             <Drawer.Content
               bg="bg.elevated"
