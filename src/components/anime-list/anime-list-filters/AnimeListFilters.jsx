@@ -5,7 +5,7 @@ import AnimeListFilterLayoutDesktop from "./AnimeListFilterLayoutDesktop";
 import { useAnimeListFilters } from "../../../context/AnimeListFiltersContext";
 
 function AnimeListFilters() {
-  const isMobile = useBreakpointValue({ base: true, md: false });
+  const isMobile = useBreakpointValue({ base: true, lg: false });
   const { isLoading } = useAnimeListFilters();
 
   if (isLoading) {

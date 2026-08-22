@@ -85,11 +85,14 @@ function AnimeListPage() {
 
             <Stack
               position={{ base: "sticky", lg: "static" }}
-              top={{ base: "87px" }}
+              top={{ base: "86px", md: "72px", lg: "auto" }}
               zIndex="10"
               bg="bg.canvas"
               gap={{ base: "4", md: "8" }}
-              pb="2"
+              pt={{ base: "2", lg: "0" }}
+              pb={{ base: "4", lg: "2" }}
+              mx={{ base: "-5", md: "-12", lg: "0" }}
+              px={{ base: "5", md: "12", lg: "0" }}
             >
               <Flex
                 align={{ base: "stretch", lg: "end" }}
