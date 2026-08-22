@@ -1,13 +1,5 @@
 import { useState, useCallback } from "react";
-import {
-  Box,
-  Container,
-  Flex,
-  Stack,
-  Text,
-  Center,
-  useBreakpointValue,
-} from "@chakra-ui/react";
+import { Box, Container, Flex, Stack, Text, Center } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import AnimeListHeader from "../components/anime-list/AnimeListHeader";
 import AnimeListSearchInput from "../components/anime-list/AnimeListSearchInput";
@@ -23,12 +15,12 @@ import {
 } from "../constants/anime-list.constants";
 import { getAnimeList } from "../services/anime-list.service";
 import Seo from "../components/global/Seo";
+import AnimeListFiltersCtxProvider from "../context/AnimeListFiltersCtxProvider";
 
 function AnimeListPage() {
   const [search, setSearch] = useState("");
   const [filters, setFilters] = useState(DEFAULT_FILTERS);
   const [page, setPage] = useState(1);
-  const isMobile = useBreakpointValue({ base: true, lg: false });
 
   const handleSearchChange = useCallback((value) => {
     setSearch(value);
@@ -87,14 +79,16 @@ function AnimeListPage() {
             px={{ base: "5", md: "12", xl: "clamp(4rem, 6vw, 10rem)" }}
             py={{ base: "7", md: "10" }}
           >
-            {isMobile && <AnimeListHeader />}
+            <Box display={{ base: "block", lg: "none" }}>
+              <AnimeListHeader />
+            </Box>
 
             <Stack
               position={{ base: "sticky", lg: "static" }}
               top={{ base: "87px" }}
               zIndex="10"
               bg="bg.canvas"
-              gap={{ base: "7", md: "8" }}
+              gap={{ base: "4", md: "8" }}
               pb="2"
             >
               <Flex
@@ -102,18 +96,22 @@ function AnimeListPage() {
                 justify="space-between"
                 direction={{ base: "column", lg: "row" }}
                 gap="6"
+                display={{ base: "none", lg: "flex" }}
               >
-                {!isMobile && <AnimeListHeader />}
+                <AnimeListHeader />
 
                 <AnimeListSearchInput onSearchChange={handleSearchChange} />
               </Flex>
 
-              <AnimeListFilters
+              <AnimeListFiltersCtxProvider
                 filters={filters}
                 onFilterChange={updateFilter}
                 onRemoveFilter={removeFilter}
                 onClearFilters={clearFilters}
-              />
+                onSearchChange={handleSearchChange}
+              >
+                <AnimeListFilters />
+              </AnimeListFiltersCtxProvider>
             </Stack>
 
             {isError ? (
