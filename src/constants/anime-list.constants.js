@@ -1,4 +1,4 @@
-import { ListFilter, PlaySquare, Tags } from "lucide-react";
+import { Clapperboard, ListFilter, Tag } from "lucide-react";
 
 export const FILTER_OPTIONS = {
   genre: [
@@ -33,11 +33,12 @@ export const ORDER_VALUE_MAP = {
 };
 
 export const FILTERS_CONFIG = [
-  { name: "genre", label: "Genre", icon: Tags },
-  { name: "type", label: "Format", icon: PlaySquare },
+  { name: "genre", label: "Genre", icon: Tag },
+  { name: "type", label: "Format", icon: Clapperboard },
   { name: "order", label: "Order", icon: ListFilter },
 ];
 
 export const CHIP_FILTERS = ["genre", "type"];
 
 export const LIMIT = 8;
+

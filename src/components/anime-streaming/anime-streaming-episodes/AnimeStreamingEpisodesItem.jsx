@@ -2,6 +2,7 @@ import { Box, Stack, Text } from "@chakra-ui/react";
 import ResaeniImage from "../../global/ResaeniImage";
 import { Link as RouterLink, useParams } from "react-router";
 import { formatDate as formatEpisodeDate } from "../../../lib/formatDate";
+import { getAssetUrl } from "../../../helpers/asset.utils";
 
 function AnimeStreamingEpisodesItem({ episode, isActive }) {
   const { mal_id: malId } = useParams();
@@ -19,7 +20,7 @@ function AnimeStreamingEpisodesItem({ episode, isActive }) {
       <Box aspectRatio="16 / 9" overflow="hidden" bg="bg.subtle">
         {episode.thumbnail_url ? (
           <ResaeniImage
-            src={episode.thumbnail_url}
+            src={getAssetUrl(episode.thumbnail_url)}
             alt={`Episode ${episodeNumber}`}
             variant="landscape"
             w="full"

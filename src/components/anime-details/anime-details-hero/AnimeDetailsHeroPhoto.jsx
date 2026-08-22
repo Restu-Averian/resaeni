@@ -1,5 +1,6 @@
 import { Box } from "@chakra-ui/react";
 import ResaeniImage from "../../global/ResaeniImage";
+import { getAssetUrl } from "../../../helpers/asset.utils";
 
 function AnimeDetailsHeroPhoto({ anime }) {
   return (
@@ -16,7 +17,7 @@ function AnimeDetailsHeroPhoto({ anime }) {
       bg="bg.panel"
     >
       <ResaeniImage
-        src={anime.photo}
+        src={getAssetUrl(anime.photo)}
         alt={anime.title_en || anime.title_romaji || "Aeni poster"}
         variant="portrait"
         loading="eager"

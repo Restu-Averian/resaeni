@@ -1,6 +1,7 @@
 import { Box, Flex, HStack, Text } from "@chakra-ui/react";
 import ResaeniImage from "../../global/ResaeniImage";
 import { Link as RouterLink } from "react-router";
+import { getAssetUrl } from "../../../helpers/asset.utils";
 
 function AnimeListDatasItem({ anime }) {
   const formatLabel = anime.type === "Movie" ? "Film" : "Series";
@@ -38,7 +39,7 @@ function AnimeListDatasItem({ anime }) {
         bg="bg.subtle"
       >
         <ResaeniImage
-          src={anime.photo}
+          src={getAssetUrl(anime.photo)}
           alt={anime.title_en || anime.title_romaji || "Aeni poster"}
           variant="portrait"
           loading="lazy"

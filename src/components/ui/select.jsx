@@ -1,6 +1,7 @@
 import {
   Box,
-  Grid,
+  Flex,
+  HStack,
   Select as ChakraSelect,
   Text,
   createListCollection,
@@ -34,7 +35,8 @@ export function Select({
   onChange,
   showPrefixLabel = true,
   triggerWidth = "fit-content",
-  minH = "58px",
+  minH = "48px",
+  mobileDisplayLabel,
 }) {
   const isMobile = useBreakpointValue({ base: true, lg: false });
   const [isOpen, setIsOpen] = useState(false);
@@ -66,20 +68,14 @@ export function Select({
   )?.label;
 
   const triggerContent = (
-    <Grid
+    <Flex
       position="relative"
-      templateColumns={
-        showPrefixLabel
-          ? "auto auto auto auto"
-          : hasPrefixIcon
-            ? "auto auto auto"
-            : "auto auto"
-      }
       w={triggerWidth}
       alignItems="center"
-      gap="3"
+      justifyContent="space-between"
+      gap="2.5"
       minH={minH}
-      px="4"
+      px="3.5"
       border="1px solid"
       borderColor="border.default"
       borderRadius="8px"
@@ -93,33 +89,51 @@ export function Select({
         outlineOffset: "-1px",
       }}
     >
-      {hasPrefixIcon && (
-        <Box color="accent.primary">
-          <Icon size={19} strokeWidth={1.55} />
-        </Box>
-      )}
+      <HStack gap="2.5" minW="0" flex="1">
+        {hasPrefixIcon && (
+          <Box
+            color="accent.primary"
+            flexShrink="0"
+            display="inline-flex"
+            alignItems="center"
+          >
+            <Icon size={18} strokeWidth={1.55} />
+          </Box>
+        )}
 
-      {showPrefixLabel && (
-        <Text color="fg.muted" fontSize={{ base: "md", lg: "sm" }}>
-          {prefixLabel}
-        </Text>
-      )}
+        {showPrefixLabel && (
+          <Text color="fg.muted" fontSize="sm" flexShrink="0">
+            {prefixLabel}
+          </Text>
+        )}
+
+        <Box
+          color="fg.heading"
+          fontSize="sm"
+          fontWeight="500"
+          textAlign="left"
+          whiteSpace="nowrap"
+          overflow="hidden"
+          textOverflow="ellipsis"
+        >
+          {mobileDisplayLabel
+            ? mobileDisplayLabel
+            : value === "Any" && showPrefixLabel
+              ? ""
+              : selectedLabel || prefixLabel}
+        </Box>
+      </HStack>
 
       <Box
-        color="fg.heading"
-        fontSize={{ base: "md", lg: "sm" }}
-        fontWeight="500"
-        pr="1"
-        textAlign="left"
-        whiteSpace="nowrap"
+        color="fg.subtle"
+        pointerEvents="none"
+        flexShrink="0"
+        display="inline-flex"
+        alignItems="center"
       >
-        {value === "Any" && showPrefixLabel ? "" : selectedLabel || prefixLabel}
+        <ChevronDown size={16} strokeWidth={1.5} />
       </Box>
-
-      <Box color="fg.subtle" pointerEvents="none">
-        <ChevronDown size={17} strokeWidth={1.5} />
-      </Box>
-    </Grid>
+    </Flex>
   );
 
   if (isMobile) {
